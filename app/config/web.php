@@ -52,6 +52,11 @@ $config = [
         */
     ],
     'params' => $params,
+    'modules' => [
+        'orders' => [
+            'class' => 'app\modules\orders\SortingOrdersModule',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {

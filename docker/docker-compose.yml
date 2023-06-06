@@ -9,26 +9,26 @@ networks:
 # Создаем отдельные контейнеры
 services:
   # Контейнер с веб-приложением
-  app:
-    # Собираем из Dockerfile
-    build:
-      # Корнем указываем корень основного проекта
-      context: ../
-      dockerfile: ./docker/Dockerfile
-    # Показываем наружу 80 порт
-    ports:
-      - "80:80"
-    # Подключаем к общей сети с другими контейнерами
-    networks:
-      - default
-    # Запускаем только после db
-    depends_on:
-      - db
-    # Линкуем внешнюю папку с исходниками внутрь
-    volumes:
-      - "../app:/var/www/app"
-      # Так же линкуем конфиг для nginx
-      - "./conf/nginx:/etc/nginx/sites-available"
+#  app:
+#    # Собираем из Dockerfile
+#    build:
+#      # Корнем указываем корень основного проекта
+#      context: ../
+#      dockerfile: ./docker/Dockerfile
+#    # Показываем наружу 80 порт
+#    ports:
+#      - "80:80"
+#    # Подключаем к общей сети с другими контейнерами
+#    networks:
+#      - default
+#    # Запускаем только после db
+#    depends_on:
+#      - db
+#    # Линкуем внешнюю папку с исходниками внутрь
+#    volumes:
+#      - "../app:/var/www/app"
+#      # Так же линкуем конфиг для nginx
+#      - "./conf/nginx:/etc/nginx/sites-available"
   # Контейнер с базой данных
   db:
     platform: linux/x86_64

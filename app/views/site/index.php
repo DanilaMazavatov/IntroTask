@@ -4,7 +4,9 @@
 
 $this->title = 'IntroTask';
 ?>
-
+<?php echo "<pre>";
+print_r($data);
+?>
 <table class="table order-table">
     <thead>
     <tr>

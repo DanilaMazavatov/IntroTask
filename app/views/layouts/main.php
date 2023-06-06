@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var yii\web\View $content */
 
 ?>
 

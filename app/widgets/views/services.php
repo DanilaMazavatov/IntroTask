@@ -1,9 +1,13 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\web\View $order_page */
 /** @var yii\web\View $count_services */
 /** @var yii\web\View $raw_data */
+/** @var yii\web\View $curr_page */
+
+$params = Yii::$app->requestedParams;
+$mode = ($params['mode'] !== null) ? ('&mode=' . $params['mode']) : '';
+$curr_service = $params['service'];
 
 ?>
 <th class="dropdown-th">
@@ -16,12 +20,25 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
             <?php
-            $data = '<li class="active"><a href="' . $order_page . '">All (<?= $count_services ?>)</a></li>';
+
+            $data = '<li class="active"><a href="/index.php?r=orders/orders/index?page=' .
+                $curr_page . $mode .
+                '">All (' . $count_services . ')</a></li>';
             foreach ($raw_data as $datum) {
-                $data .= '<li><a href="' . $order_page . 'service/' . $datum->id . '"><span class="label-id">' . $datum->id . '</span> ' . $datum->name . '</a></li>';
+                if ($datum->id == $curr_service) {
+                    $data .= '<li class="active">';
+                } else {
+                    $data .= '<li>';
+                }
+
+                $data .= '<a href="/index.php?r=orders/orders/index?page='
+                    . $curr_page . '&service=' . $datum->id . $mode . '"><span class="label-id">' . $datum->id . '</span> ' . $datum->name . '</a>';
+
+                $data .= '</li>';
             }
 
             echo $data;
+            unset($data);
             ?>
 
         </ul>

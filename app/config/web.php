@@ -47,11 +47,6 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'orders/orders/index',
-                '/orders/page/<page>' => 'orders/orders/index',
-                '/orders/page/<page>/service/<service>' => 'orders/filter/index',
-                '/orders/page/<page>/mode/<mode>' => 'orders/filter/index',
-                '/orders/page/<page>/mode/<mode>/service/<service>' => 'orders/filter/index',
-                '/orders/page/<page>/service/<service>/mode/<mode>' => 'orders/filter/index',
             ],
         ],
     ],

@@ -18,20 +18,9 @@ $this->title = 'IntroTask';
         <?= \app\widgets\ServiceFilterWidget::widget() ?>
 
         <th>Status</th>
-        <th class="dropdown-th">
-            <div class="dropdown">
-                <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Mode
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li class="active"><a href="">All</a></li>
-                    <li><a href="">Manual</a></li>
-                    <li><a href="">Auto</a></li>
-                </ul>
-            </div>
-        </th>
+
+        <?= \app\widgets\ModeFilterWidget::widget() ?>
+
         <th>Created</th>
     </tr>
     </thead>

@@ -53,12 +53,7 @@
 </nav>
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <li class="active"><a href="#">All orders</a></li>
-        <li><a href="#">Pending</a></li>
-        <li><a href="#">In progress</a></li>
-        <li><a href="#">Completed</a></li>
-        <li><a href="#">Canceled</a></li>
-        <li><a href="#">Error</a></li>
+        <?= \app\widgets\StatusFilterWidget::widget() ?>
         <li class="pull-right custom-search">
             <form class="form-inline" action="/admin/orders" method="get">
                 <div class="input-group">

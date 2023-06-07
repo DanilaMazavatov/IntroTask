@@ -4,6 +4,7 @@ namespace app\modules\orders\controllers;
 
 use app\modules\orders\models\OrderModel;
 use yii\base\InvalidArgumentException;
+use yii\db\Exception;
 use yii\web\Controller;
 
 /**
@@ -11,35 +12,71 @@ use yii\web\Controller;
  */
 class OrdersController extends Controller
 {
-    private $ordersModel;
 
     /**
      * Данный метод отвечает за отображение данных в сыром виде
      * @throws
      */
-    public function actionIndex($page = 1): string
+    public function actionIndex($page = 1, int $service = null, int $mode = null, int $status = null): string
     {
-        $this->ordersModel = new OrderModel();
-
         /*
-         * FIXME: Здесь должна быть валидация...
-         */
-//        $this->ordersModel->load(\Yii::$app->request->get());
-//
-//        if ($this->ordersModel->validate()) {
-//            dd(1);
-//            // все данные корректны
-//        } else {
-//            dd(2);
-//            // данные не корректны: $errors - массив содержащий сообщения об ошибках
-//            $errors = $this->ordersModel->errors;
-//        }
+        * FIXME: Здесь должна быть валидация...
+        */
 
-        $raw_data = $this->ordersModel->getDataOnPage($page);
+        if ($status !== null) {
+            return $this->dataStatus($page, $status);
+        } elseif ($service === null && $mode === null) {
+            return $this->dataRender($page);
+        } else {
+            return $this->dataFilter($page, $service, $mode);
+        }
+    }
 
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    private function dataFilter($page = 1, $service = null, $mode = null): string
+    {
+        $orders = new OrderModel();
+
+        $raw_data = $orders->getDataOnPage($page, $service, $mode);
 
         return $this->render('index', array(
             'raw_data' => $raw_data,
+            'service' => $service,
+            'mode' => $mode,
+        ));
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    private function dataRender($page): string
+    {
+        $orders = new OrderModel();
+
+        $raw_data = $orders->getDataOnPage($page);
+
+        return $this->render('index', array(
+            'raw_data' => $raw_data,
+        ));
+    }
+
+    /**
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    private function dataStatus(int $page, int $status): string
+    {
+        $orders = new OrderModel();
+
+        $raw_data = $orders->getDataOnPage($page, null, null, $status);
+
+        return $this->render('index', array(
+            'raw_data' => $raw_data,
+            'status' => $status,
         ));
     }
 

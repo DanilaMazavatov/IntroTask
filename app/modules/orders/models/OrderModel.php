@@ -38,9 +38,11 @@ class OrderModel extends \yii\db\ActiveRecord
      * Данный метод отвечает за постраничную выборку данных из соответствующей таблицы
      * @throws Exception
      */
-    public function getDataOnPage($page, $service = null, int $mode = null){
-
-        if ($service && $mode !== null) {
+    public function getDataOnPage($page, $service = null, int $mode = null, int $status = null)
+    {
+        if ($status !== null) {
+            $where = "WHERE o.status = $status";
+        } elseif ($service && $mode !== null) {
             $where = "WHERE o.service_id = $service AND o.mode = $mode";
         } elseif ($service && $mode === null) {
             $where = "WHERE o.service_id = $service";

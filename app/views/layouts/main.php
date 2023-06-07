@@ -2,6 +2,7 @@
 
 /** @var yii\web\View $this */
 /** @var yii\web\View $content */
+/** @var yii\web\View $pages */
 
 ?>
 
@@ -16,6 +17,7 @@
     <title><?php $this->title ?></title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
+
     <style>
         .label-default{
             border: 1px solid #ddd;
@@ -80,6 +82,11 @@
 
             <nav>
                 <ul class="pagination">
+                    <?php
+                    foreach ($pages as $page) {
+                        echo $page == $this->page ? "<li class=\"active\"><a href=\"\">$page</a></li>" : "<li><a href=\"\">2</a></li>";
+                    }
+                    ?>
                     <li class="disabled"><a href="" aria-label="Previous">&laquo;</a></li>
                     <li class="active"><a href="">1</a></li>
                     <li><a href="">2</a></li>

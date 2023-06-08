@@ -7,7 +7,7 @@ use const app\models\__CLASS__;
 
 class OrderModel extends \yii\db\ActiveRecord
 {
-    private $default_fields = 'o.id as ID, concat(u.first_name , " " , u.last_name) as User, o.link as Link, o.quantity as Quantity, o.service_id, s.name as Service, o.status as Status, o.mode as Mode, o.created_at as Created';
+    private string $default_fields = 'o.id as ID, concat(u.first_name , " " , u.last_name) as User, o.link as Link, o.quantity as Quantity, o.service_id, s.name as Service, o.status as Status, o.mode as Mode, o.created_at as Created';
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -21,7 +21,7 @@ class OrderModel extends \yii\db\ActiveRecord
     /**
      * @return string the associated database table name
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'orders';
     }
@@ -29,7 +29,7 @@ class OrderModel extends \yii\db\ActiveRecord
     /**
      * @return array primary key of the table
      **/
-    public static function primaryKey()
+    public static function primaryKey(): array
     {
         return array('id');
     }
@@ -68,7 +68,7 @@ class OrderModel extends \yii\db\ActiveRecord
     }
 
     #TODO: Оформить нормальную валидацию и подключить к ней нужные методы
-    public function rules()
+    public function rules(): array
     {
         return [
             [['page'], 'integer'],

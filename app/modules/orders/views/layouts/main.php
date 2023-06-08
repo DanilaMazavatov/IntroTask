@@ -53,7 +53,7 @@
 </nav>
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <?= \app\widgets\StatusFilterWidget::widget() ?>
+        <?= \app\modules\orders\widgets\StatusFilterWidget::widget() ?>
         <li class="pull-right custom-search">
             <form class="form-inline" action="/admin/orders" method="get">
                 <div class="input-group">
@@ -73,7 +73,7 @@
     </ul>
     <?= $content ?>
     <div class="row">
-        <?= \app\widgets\PagerWidget::widget() ?>
+        <?= \app\modules\orders\widgets\PagerWidget::widget() ?>
         <div class="col-sm-4 pagination-counters">
             1 to 100 of 3263
         </div>

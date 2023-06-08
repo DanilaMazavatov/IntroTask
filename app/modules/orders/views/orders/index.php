@@ -15,11 +15,11 @@ $this->title = 'IntroTask';
         <th>Link</th>
         <th>Quantity</th>
 
-        <?= \app\widgets\ServiceFilterWidget::widget() ?>
+        <?= \app\modules\orders\widgets\ServiceFilterWidget::widget() ?>
 
         <th>Status</th>
 
-        <?= \app\widgets\ModeFilterWidget::widget() ?>
+        <?= \app\modules\orders\widgets\ModeFilterWidget::widget() ?>
 
         <th>Created</th>
     </tr>

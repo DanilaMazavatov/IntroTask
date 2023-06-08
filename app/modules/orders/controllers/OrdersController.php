@@ -33,8 +33,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException|Exception
      */
     private function dataFilter($page = 1, $service = null, $mode = null): string
     {

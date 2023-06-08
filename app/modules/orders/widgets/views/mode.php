@@ -31,11 +31,11 @@ $curr_mode = $params['mode'];
                     $data .= "<a href=\"/orders?page="
                         . $curr_page . $service . "\">All</a>";
                 } elseif ($key == 'manual') {
-                    $data .= "<a href=\"/orders?page="
-                        . $curr_page . $service . "&mode=" . $mode . "\">Manual</a>";
+                    $data .= "<a href=\"/orders?page=1" .
+                        $service . "&mode=" . $mode . "\">Manual</a>";
                 } elseif ($key == 'auto') {
-                    $data .= "<a href=\"/orders?page="
-                        . $curr_page . $service . "&mode=" . $mode . "\">Auto</a>";
+                    $data .= "<a href=\"/orders?page=1"
+                        . $service . "&mode=" . $mode . "\">Auto</a>";
                 }
                 $data .= "</li>";
             }

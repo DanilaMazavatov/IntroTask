@@ -3,6 +3,7 @@
 namespace app\modules\orders\controllers;
 
 use app\modules\orders\models\OrderModel;
+use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii\db\Exception;
 use yii\web\Controller;
@@ -12,6 +13,7 @@ use yii\web\Controller;
  */
 class OrdersController extends Controller
 {
+    private BaseObject $orders;
 
     /**
      * Данный метод отвечает за отображение данных в сыром виде
@@ -22,6 +24,10 @@ class OrdersController extends Controller
         /*
         * FIXME: Здесь должна быть валидация...
         */
+        $this->orders = new OrderModel();
+        $this->orders->orderBy = 'ORDER BY ID DESC';
+        $this->orders->limit = 'LIMIT 100';
+        $this->orders->offset = 'OFFSET ' . ($page - 1) * 100;
 
         if ($status !== null) {
             return $this->dataStatus($page, $status);
@@ -37,9 +43,7 @@ class OrdersController extends Controller
      */
     private function dataFilter($page = 1, $service = null, $mode = null): string
     {
-        $orders = new OrderModel();
-
-        $raw_data = $orders->getDataOnPage($page, $service, $mode);
+        $raw_data = $this->orders->getDataOnPage($page, $service, $mode);
 
         return $this->render('index', array(
             'raw_data' => $raw_data,
@@ -54,9 +58,7 @@ class OrdersController extends Controller
      */
     private function dataRender($page): string
     {
-        $orders = new OrderModel();
-
-        $raw_data = $orders->getDataOnPage($page);
+        $raw_data = $this->orders->getDataOnPage($page);
 
         return $this->render('index', array(
             'raw_data' => $raw_data,
@@ -69,9 +71,7 @@ class OrdersController extends Controller
      */
     private function dataStatus(int $page, int $status): string
     {
-        $orders = new OrderModel();
-
-        $raw_data = $orders->getDataOnPage($page, null, null, $status);
+        $raw_data = $this->orders->getDataOnPage($page, null, null, $status);
 
         return $this->render('index', array(
             'raw_data' => $raw_data,

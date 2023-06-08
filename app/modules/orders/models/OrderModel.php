@@ -7,7 +7,12 @@ use const app\models\__CLASS__;
 
 class OrderModel extends \yii\db\ActiveRecord
 {
-    private string $default_fields = 'o.id as ID, concat(u.first_name , " " , u.last_name) as User, o.link as Link, o.quantity as Quantity, o.service_id, s.name as Service, o.status as Status, o.mode as Mode, o.created_at as Created';
+    public string $default_fields = 'o.id as ID, concat(u.first_name , " " , u.last_name) as User, o.link as Link, o.quantity as Quantity, o.service_id, s.name as Service, o.status as Status, o.mode as Mode, o.created_at as Created';
+
+    public string $orderBy = '';
+    public string $limit = '';
+    public string $offset = '';
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -38,7 +43,7 @@ class OrderModel extends \yii\db\ActiveRecord
      * Данный метод отвечает за постраничную выборку данных из соответствующей таблицы
      * @throws Exception
      */
-    public function getDataOnPage($page, $service = null, int $mode = null, int $status = null)
+    public function getDataOnPage($page, $service = null, int $mode = null, int $status = null): \yii\db\DataReader|array
     {
         if ($status !== null) {
             $where = "WHERE o.status = $status";
@@ -50,19 +55,13 @@ class OrderModel extends \yii\db\ActiveRecord
             $where = "WHERE o.mode = $mode";
         }
 
-
         $data = Yii::$app->db->createCommand('SELECT
             ' . $this->default_fields . '
             FROM ' . self::tableName() . ' o
             LEFT JOIN users u on o.user_id = u.id
             Left JOIN services s on o.service_id = s.id
             ' .
-            ($where ?? '')
-            .  '
-            ORDER BY ID DESC
-            LIMIT 100 
-            OFFSET ' . ($page - 1) * 100 . ' 
-            ')->queryAll();
+            ($where ?? '') . ' ' .  ($this->orderBy ?? '') . ' ' . ($this->limit ?? '') . ' ' . ($this->offset ?? '') . ';')->queryAll();
 
         return $data;
     }

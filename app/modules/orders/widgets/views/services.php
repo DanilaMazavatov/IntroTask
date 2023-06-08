@@ -21,8 +21,8 @@ $curr_service = $params['service'];
 
             <?php
 
-            $data = '<li class="active"><a href="/orders?page=' .
-                $curr_page . $mode .
+            $data = '<li class="active"><a href="/orders?page=1'
+                . $mode .
                 '">All (' . $count_services . ')</a></li>';
             foreach ($raw_data as $datum) {
                 if ($datum->id == $curr_service) {
@@ -31,8 +31,8 @@ $curr_service = $params['service'];
                     $data .= '<li>';
                 }
 
-                $data .= '<a href="/orders?page='
-                    . $curr_page . '&service=' . $datum->id . $mode . '"><span class="label-id">' . $datum->id . '</span> ' . $datum->name . '</a>';
+                $data .= '<a href="/orders?page=1'
+                    . '&service=' . $datum->id . $mode . '"><span class="label-id">' . $datum->id . '</span> ' . $datum->name . '</a>';
 
                 $data .= '</li>';
             }

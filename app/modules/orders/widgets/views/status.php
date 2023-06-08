@@ -20,11 +20,11 @@ foreach ($statuses as $key => $status) {
     }
 
     if ($key == 'All orders') {
-        $data .= "<a href=\"/orders?page="
-            . $curr_page  . "\">All orders</a>";
+        $data .= "<a href=\"/orders?page=1"
+            . "\">All orders</a>";
     } else {
-        $data .= "<a href=\"/orders?page="
-            . $curr_page . "&status=" . $status . "\">$key</a>";
+        $data .= "<a href=\"/orders?page=1"
+            . "&status=" . $status . "\">$key</a>";
     }
 
     $data .= "</li>";

@@ -2,7 +2,7 @@
 
 namespace app\modules\orders\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "services".
@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $name
  */
-class ServiceModel extends \yii\db\ActiveRecord
+class ServiceModel extends ActiveRecord
 {
     /**
      * {@inheritdoc}

@@ -4,8 +4,6 @@ namespace app\modules\orders\controllers;
 
 use app\modules\orders\models\OrderModel;
 use yii\base\BaseObject;
-use yii\base\InvalidArgumentException;
-use yii\db\Exception;
 use yii\web\Controller;
 
 /**
@@ -19,64 +17,15 @@ class OrdersController extends Controller
      * Данный метод отвечает за отображение данных в сыром виде
      * @throws
      */
-    public function actionIndex($page = 1, int $service = null, int $mode = null, int $status = null): string
+    public function actionIndex()
     {
-        /*
-        * FIXME: Здесь должна быть валидация...
-        */
-        $this->orders = new OrderModel();
-        $this->orders->orderBy = 'ORDER BY ID DESC';
-        $this->orders->limit = 'LIMIT 100';
-        $this->orders->offset = 'OFFSET ' . ($page - 1) * 100;
+        $searchModel = new OrderModel();
+//        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $data = $searchModel->getDataOnPage(\Yii::$app->request->get('page'), \Yii::$app->request->get('service'), \Yii::$app->request->get('mode'),
+            \Yii::$app->request->get('status'));
 
-        if ($status !== null) {
-            return $this->dataStatus($page, $status);
-        } elseif ($service === null && $mode === null) {
-            return $this->dataRender($page);
-        } else {
-            return $this->dataFilter($page, $service, $mode);
-        }
+        return $this->render('index', [
+            'raw_data' => $data
+        ]);
     }
-
-    /**
-     * @throws InvalidArgumentException|Exception
-     */
-    private function dataFilter($page = 1, $service = null, $mode = null): string
-    {
-        $raw_data = $this->orders->getDataOnPage($page, $service, $mode);
-
-        return $this->render('index', array(
-            'raw_data' => $raw_data,
-            'service' => $service,
-            'mode' => $mode,
-        ));
-    }
-
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
-    private function dataRender($page): string
-    {
-        $raw_data = $this->orders->getDataOnPage($page);
-
-        return $this->render('index', array(
-            'raw_data' => $raw_data,
-        ));
-    }
-
-    /**
-     * @throws Exception
-     * @throws InvalidArgumentException
-     */
-    private function dataStatus(int $page, int $status): string
-    {
-        $raw_data = $this->orders->getDataOnPage($page, null, null, $status);
-
-        return $this->render('index', array(
-            'raw_data' => $raw_data,
-            'status' => $status,
-        ));
-    }
-
 }

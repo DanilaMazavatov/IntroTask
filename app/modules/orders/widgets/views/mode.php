@@ -3,11 +3,7 @@
 /** @var yii\web\View $this */
 /** @var yii\web\View $modes */
 
-$params = Yii::$app->requestedParams;
-$service = ($params['service'] !== null) ? ('&service=' . $params['service']) : '';
-
-$curr_page = $params['page'];
-$curr_mode = $params['mode'];
+$service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
 
 ?>
 <th class="dropdown-th">
@@ -22,14 +18,14 @@ $curr_mode = $params['mode'];
 
             $data = '';
             foreach ($modes as $key => $mode) {
-                if ($mode === $curr_mode) {
+                if ($mode === Yii::$app->request->get('mode')) {
                     $data .= "<li class=\"active\">";
                 } else {
                     $data .= "<li>";
                 }
                 if ($key == 'all') {
                     $data .= "<a href=\"/orders?page="
-                        . $curr_page . $service . "\">All</a>";
+                        . Yii::$app->request->get('page') . $service . "\">All</a>";
                 } elseif ($key == 'manual') {
                     $data .= "<a href=\"/orders?page=1" .
                         $service . "&mode=" . $mode . "\">Manual</a>";

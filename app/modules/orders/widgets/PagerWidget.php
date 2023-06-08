@@ -6,10 +6,11 @@ namespace app\modules\orders\widgets;
 use app\modules\orders\models\OrderModel;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\bootstrap5\Widget;
 use yii\data\Pagination;
 use yii\db\Exception;
 
-class PagerWidget extends \yii\bootstrap5\Widget
+class PagerWidget extends Widget
 {
     /**
      * @throws InvalidArgumentException
@@ -20,10 +21,9 @@ class PagerWidget extends \yii\bootstrap5\Widget
         $orders = new OrderModel();
 
         $orders->default_fields = 'count(o.id) as count';
-        $total_count = $orders->getDataOnPage(Yii::$app->requestedParams['page'], Yii::$app->requestedParams['service'],
-            Yii::$app->requestedParams['mode'], Yii::$app->requestedParams['status']);
+        $total_count = $orders->getDataOnPage(Yii::$app->request->get('page'), Yii::$app->request->get('service'),
+            Yii::$app->request->get('mode'), Yii::$app->request->get('status'));
 
-        $curr_page = Yii::$app->requestedParams['page'];
         $pages = new Pagination([
             'totalCount' => $total_count[0]['count'],
             'route' => '/orders',
@@ -32,7 +32,6 @@ class PagerWidget extends \yii\bootstrap5\Widget
 
         return $this->render('pager', [
             'pages' => $pages,
-            'curr_page' => $curr_page,
         ]);
     }
 }

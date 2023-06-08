@@ -3,11 +3,9 @@
 /** @var yii\web\View $this */
 /** @var yii\web\View $count_services */
 /** @var yii\web\View $raw_data */
-/** @var yii\web\View $curr_page */
 
-$params = Yii::$app->requestedParams;
-$mode = ($params['mode'] !== null) ? ('&mode=' . $params['mode']) : '';
-$curr_service = $params['service'];
+$mode = (Yii::$app->request->get('mode') !== null) ? ('&mode=' . Yii::$app->request->get('mode')) : '';
+$curr_service = Yii::$app->request->get('service');
 
 ?>
 <th class="dropdown-th">

@@ -2,10 +2,12 @@
 namespace app\modules\orders\models;
 use app\models\Comments;
 use Yii;
+use yii\db\ActiveRecord;
+use yii\db\DataReader;
 use yii\db\Exception;
 use const app\models\__CLASS__;
 
-class OrderModel extends \yii\db\ActiveRecord
+class OrderModel extends ActiveRecord
 {
     public string $default_fields = 'o.id as ID, concat(u.first_name , " " , u.last_name) as User, o.link as Link, o.quantity as Quantity, o.service_id, s.name as Service, o.status as Status, o.mode as Mode, o.created_at as Created';
 
@@ -43,7 +45,7 @@ class OrderModel extends \yii\db\ActiveRecord
      * Данный метод отвечает за постраничную выборку данных из соответствующей таблицы
      * @throws Exception
      */
-    public function getDataOnPage($page, $service = null, int $mode = null, int $status = null): \yii\db\DataReader|array
+    public function getDataOnPage($page, $service = null, int $mode = null, int $status = null): DataReader|array
     {
         if ($status !== null) {
             $where = "WHERE o.status = $status";

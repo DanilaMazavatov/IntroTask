@@ -3,8 +3,9 @@
 namespace app\modules\orders\widgets;
 
 use yii\base\InvalidArgumentException;
+use yii\bootstrap5\Widget;
 
-class StatusFilterWidget extends \yii\bootstrap5\Widget
+class StatusFilterWidget extends Widget
 {
     /**
      * @throws InvalidArgumentException

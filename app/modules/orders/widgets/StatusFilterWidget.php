@@ -7,6 +7,11 @@ use yii\bootstrap5\Widget;
 
 class StatusFilterWidget extends Widget
 {
+    const PENDING = 0;
+    const IN_PROGRESS = 1;
+    const COMPLETED = 2;
+    const CANCELED = 3;
+    const ERROR = 4;
     /**
      * @throws InvalidArgumentException
      */
@@ -15,11 +20,11 @@ class StatusFilterWidget extends Widget
         return $this->render('status', [
             'statuses' => [
                 'All orders' => null,
-                'Pending' => 0,
-                'In progress' => 1,
-                'Completed' => 2,
-                'Canceled' => 3,
-                'Error' => 4,
+                'Pending' => self::PENDING,
+                'In progress' => self::IN_PROGRESS,
+                'Completed' => self::COMPLETED,
+                'Canceled' => self::CANCELED,
+                'Error' => self::ERROR,
             ]
         ]);
     }

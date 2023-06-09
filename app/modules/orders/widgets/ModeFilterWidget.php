@@ -7,6 +7,8 @@ use yii\bootstrap5\Widget;
 
 class ModeFilterWidget extends Widget
 {
+    const MANUAL = 0;
+    const AUTO = 0;
     /**
      * @throws InvalidArgumentException
      */
@@ -15,8 +17,8 @@ class ModeFilterWidget extends Widget
         return $this->render('mode', [
             'modes' => [
                 'all' => null,
-                'manual' => 0,
-                'auto' => 1
+                'manual' => self::MANUAL,
+                'auto' => self::AUTO
             ]
         ]);
     }

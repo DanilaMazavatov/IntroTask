@@ -23,7 +23,7 @@ class OrdersController extends Controller
         $data = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'raw_data' => $data->all()
+            'raw_data' => $data->all(),
         ]);
     }
 }

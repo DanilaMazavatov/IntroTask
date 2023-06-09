@@ -3,16 +3,17 @@
 
 namespace app\modules\orders\widgets;
 
-use app\modules\orders\models\OrderModel;
 use app\modules\orders\models\SearchOrder;
-use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 use yii\data\Pagination;
-use yii\db\Exception;
+use function PHPUnit\Framework\returnSelf;
 
 class PagerWidget extends Widget
 {
+    const ROUTE = '/orders';
+    const PAGE_SIZE = 100;
+    const PAGE_SIZE_PARAM = false;
     /**
      * @throws InvalidArgumentException
      */
@@ -23,8 +24,9 @@ class PagerWidget extends Widget
 
         $pages = new Pagination([
             'totalCount' => $data,
-            'route' => '/orders',
-            'pageSize' => 100,
+            'route' => self::ROUTE,
+            'pageSize' => self::PAGE_SIZE,
+            'pageSizeParam' => self::PAGE_SIZE_PARAM,
         ]);
 
         return $this->render('pager', [

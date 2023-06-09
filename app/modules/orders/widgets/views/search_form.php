@@ -1,18 +1,40 @@
 <?php
 
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\Html;
+
+/** @var yii\web\View $model */
 
 ?>
-<form class="form-inline" action="orders/search" method="get">
-    <div class="input-group">
-        <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
-        <span class="input-group-btn search-select-wrap">
 
-            <select class="form-control search-select" name="search-type">
-              <option value="1" selected="">Order ID</option>
-              <option value="2">Link</option>
-              <option value="3">Username</option>
-            </select>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-    </div>
-</form>
+<?php $form = ActiveForm::begin([
+    'action' => ['/orders'],
+    'method' => 'get',
+    'options' => [
+        'class' => 'form-inline'
+    ],
+    'fieldConfig' => [
+        'template' => "{input}",
+        'options' => ['tag' => false],
+    ],
+]);
+
+?>
+<div class="input-group">
+
+    <?= $form->field($model, 'search')->textInput(['maxlength' => 255, 'class' => 'form-control', 'placeholder' => 'Search Orders', 'name' => 'search'])->label(false) ?>
+
+    <span class="input-group-btn search-select-wrap">
+
+            <?= $form->field($model, 'search_type')->dropDownList([
+                1 => 'Order ID',
+                2 => 'Link',
+                3 => 'Username',
+            ], ['class' => 'form-control search-select', 'name' => 'search_type'])->label(false) ?>
+            <?= Html::submitButton('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', ['class' => 'btn btn-default']) ?>
+         </span>
+</div>
+
+<?php ActiveForm::end(); ?>
+
+

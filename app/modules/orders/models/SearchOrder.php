@@ -12,13 +12,28 @@ use yii\db\ActiveQuery;
 class SearchOrder extends OrderModel
 {
 
+    public $search;
+
+    public $mode;
+
+    public $service;
+
+    public $status;
+
+    public $page;
+
+    public $search_type;
+
+    const LIMIT = 100;
+
     /**
      * {@inheritdoc}
      */
     public function rules(): array
     {
         return [
-            [['id', 'user_id', 'quantity', 'service_id', 'status', 'created_at', 'mode'], 'integer'],
+            [['id', 'user_id', 'quantity', 'service', 'status', 'created_at', 'mode', 'search_type',], 'integer'],
+            [['search'], 'string'],
             [['link'], 'safe'],
         ];
     }
@@ -41,15 +56,28 @@ class SearchOrder extends OrderModel
      */
     public function search(array $params): ActiveQuery|null
     {
-        $mode = $params['mode'] ?? null;
-        $service_id = $params['service'] ?? null;
-        $status = $params['status'] ?? null;
-        $page = $params['page'] ?? null;
+        $this->mode = $params['mode'] ?? null;
+        $this->service = $params['service'] ?? null;
+        $this->status = $params['status'] ?? null;
+        $this->page = $params['page'] ?? null;
+        $this->search = isset($params['search']) ? strtolower(trim($params['search'], ' ')) : null;
+        $this->search_type = $params['search_type'] ?? null;
+        $operator = 'like';
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return null;
+        switch ($this->search_type) {
+            case null:
+                $search_value = null;
+                break;
+            case 1:
+                $search_value = 'o.id';
+                $operator = '=';
+                break;
+            case 2:
+                $search_value = 'o.link';
+                break;
+            case 3:
+                $search_value = 'concat(u.first_name, \' \', u.last_name)';
+                break;
         }
 
         $query = OrderModel::find()
@@ -58,24 +86,23 @@ class SearchOrder extends OrderModel
             ->from('orders o')
             ->leftJoin('services s', 'o.service_id = s.id')
             ->leftJoin('users u', 'o.user_id = u.id')
-            ->offset(($page - 1) * 100)
-            ->limit(100)
+            ->offset(($this->page - 1) * 100)
+            ->limit(self::LIMIT)
             ->asArray();
 
+        if (!$this->validate()) {
+            return $query;
+        }
+
         $query->andFilterWhere([
-        'o.mode' => $mode,
-        'o.service_id' => $service_id,
-        'o.status' => $status,
-    ]);
+            $operator, $search_value, $this->search
+        ]);
+
+        $query->andFilterWhere([
+            'o.mode' => $this->mode,
+            'o.service_id' => $this->service,
+            'o.status' => $this->status,
+        ]);
         return $query;
-
-        //
-//        $this->load($params);
-//
-
-
-        // grid filtering conditions
-
-
     }
 }

@@ -4,6 +4,10 @@
 /** @var yii\web\View $count_services */
 /** @var yii\web\View $raw_data */
 
+Yii::$app->language = (Yii::$app->language == 'ru') ? '' : Yii::$app->language;
+
+use yii\helpers\Url;
+
 $mode = (Yii::$app->request->get('mode') !== null) ? ('&mode=' . Yii::$app->request->get('mode')) : '';
 $curr_service = Yii::$app->request->get('service');
 
@@ -19,9 +23,7 @@ $curr_service = Yii::$app->request->get('service');
 
             <?php
 
-            $data = '<li class="active"><a href="/orders?page=1'
-                . $mode .
-                '">All (' . $count_services . ')</a></li>';
+            $data = "<li class=\"active\"><a href=\"" . Url::to(["/orders?page=1$mode", 'language' => Yii::$app->language]) . "\">All ($count_services)</a></li>";
             foreach ($raw_data as $datum) {
                 if ($datum->id == $curr_service) {
                     $data .= '<li class="active">';
@@ -29,8 +31,8 @@ $curr_service = Yii::$app->request->get('service');
                     $data .= '<li>';
                 }
 
-                $data .= '<a href="/orders?page=1'
-                    . '&service=' . $datum->id . $mode . '"><span class="label-id">' . $datum->id . '</span> ' . $datum->name . '</a>';
+                $data .= "<a href=\"" . Url::to(["/orders?page=1&service=$datum->id" . $mode,
+                        'language' => Yii::$app->language]) . "\"><span class=\"label-id\">$datum->id</span>$datum->name</a>";
 
                 $data .= '</li>';
             }

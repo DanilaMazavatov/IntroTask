@@ -1,7 +1,10 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var yii\web\View $modes */
+
+use yii\helpers\Url;
 
 $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
 
@@ -24,20 +27,18 @@ $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$
                     $data .= "<li>";
                 }
                 if ($key == 'all') {
-                    $data .= "<a href=\"/orders?page="
-                        . Yii::$app->request->get('page') . $service . "\">All</a>";
+                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service", 'language' => Yii::$app->language]) . "\">All</a>";
                 } elseif ($key == 'manual') {
-                    $data .= "<a href=\"/orders?page=1" .
-                        $service . "&mode=" . $mode . "\">Manual</a>";
+                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service&mode=$mode", 'language' => Yii::$app->language]) . "\">Manual</a>";
                 } elseif ($key == 'auto') {
-                    $data .= "<a href=\"/orders?page=1"
-                        . $service . "&mode=" . $mode . "\">Auto</a>";
+                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service&mode=$mode", 'language' => Yii::$app->language]) . "\">Auto</a>";
                 }
                 $data .= "</li>";
             }
 
             echo $data;
             unset($data);
+
             ?>
         </ul>
     </div>

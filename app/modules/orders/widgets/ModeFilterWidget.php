@@ -8,7 +8,7 @@ use yii\bootstrap5\Widget;
 class ModeFilterWidget extends Widget
 {
     const MANUAL = 0;
-    const AUTO = 0;
+    const AUTO = 1;
     /**
      * @throws InvalidArgumentException
      */

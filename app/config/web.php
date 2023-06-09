@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'defaultRoute' => '/order',
     'language' => 'ru',
     'sourceLanguage' => 'ru',
     'basePath' => dirname(__DIR__),
@@ -45,6 +46,11 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+//            'on languageChanged' => '\app\modules\orders\controllers\OrdersController::changeLanguage',
+            'enableLanguageDetection' => false,
+            'enableDefaultLanguageUrlCode' => false,
+            'languages' => ['ru', 'en-US', 'en'],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
@@ -56,11 +62,10 @@ $config = [
             'translations' => [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-//                    'basePath' => '@app/modules/orders/translations',
-                    //'sourceLanguage' => 'en-US',
+                    'basePath' => '@app/modules/orders/translations',
+                    'sourceLanguage' => 'ru',
                     'fileMap' => [
                         'app'       => 'app.php',
-                        'app/error' => 'error.php',
                     ],
                 ],
             ],

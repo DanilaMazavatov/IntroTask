@@ -3,6 +3,7 @@
 namespace app\modules\orders\controllers;
 
 use app\modules\orders\models\SearchOrder;
+use Yii;
 use yii\base\BaseObject;
 use yii\web\Controller;
 

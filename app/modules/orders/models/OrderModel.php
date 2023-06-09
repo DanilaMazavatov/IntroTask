@@ -72,7 +72,12 @@ class OrderModel extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['page'], 'integer'],
+            [['page', 'mode', 'status, service'], 'integer'],
         ];
+    }
+
+    public function search()
+    {
+
     }
 }

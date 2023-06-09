@@ -6,8 +6,8 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'defaultRoute' => '/order',
-    'language' => 'ru',
-    'sourceLanguage' => 'ru',
+    'language' => 'en',
+    'sourceLanguage' => 'en',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -50,7 +50,7 @@ $config = [
 //            'on languageChanged' => '\app\modules\orders\controllers\OrdersController::changeLanguage',
             'enableLanguageDetection' => false,
             'enableDefaultLanguageUrlCode' => false,
-            'languages' => ['ru', 'en-US', 'en'],
+            'languages' => ['ru', 'en'],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
@@ -63,9 +63,9 @@ $config = [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/modules/orders/translations',
-                    'sourceLanguage' => 'ru',
+                    'sourceLanguage' => 'en',
                     'fileMap' => [
-                        'app'       => 'app.php',
+                        'app' => 'app.php',
                     ],
                 ],
             ],

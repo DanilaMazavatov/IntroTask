@@ -4,6 +4,10 @@
 /** @var yii\web\View $content */
 /** @var yii\web\View $pages */
 
+use app\modules\orders\widgets\PagerWidget;
+use app\modules\orders\widgets\SearchWidget;
+use app\modules\orders\widgets\StatusFilterWidget;
+
 ?>
 
 <?php $this->beginPage(); ?>
@@ -53,14 +57,14 @@
 </nav>
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <?= \app\modules\orders\widgets\StatusFilterWidget::widget() ?>
+        <?= StatusFilterWidget::widget() ?>
         <li class="pull-right custom-search">
-            <?= \app\modules\orders\widgets\SearchWidget::widget() ?>
+            <?= SearchWidget::widget() ?>
         </li>
     </ul>
     <?= $content ?>
     <div class="row">
-        <?= \app\modules\orders\widgets\PagerWidget::widget() ?>
+        <?= PagerWidget::widget() ?>
         <div class="col-sm-4 pagination-counters">
             1 to 100 of 3263
         </div>

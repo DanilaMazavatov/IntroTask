@@ -3,7 +3,10 @@
 /** @var yii\web\View $this */
 /** @var yii\web\View $raw_data */
 
-$this->title = 'IntroTask';
+use app\modules\orders\widgets\ModeFilterWidget;
+use app\modules\orders\widgets\ServiceFilterWidget;
+
+$this->title = \Yii::t('app', 'IntroTask');
 
 ?>
 
@@ -11,17 +14,17 @@ $this->title = 'IntroTask';
     <thead>
     <tr>
         <th>ID</th>
-        <th>User</th>
-        <th>Link</th>
-        <th>Quantity</th>
+        <th><?= \Yii::t('app', 'User') ?></th>
+        <th><?= \Yii::t('app', 'Link') ?></th>
+        <th><?= \Yii::t('app', 'Quantity') ?></th>
 
-        <?= \app\modules\orders\widgets\ServiceFilterWidget::widget() ?>
+        <?= ServiceFilterWidget::widget() ?>
 
-        <th>Status</th>
+        <th><?= \Yii::t('app', 'Status') ?></th>
 
-        <?= \app\modules\orders\widgets\ModeFilterWidget::widget() ?>
+        <?= ModeFilterWidget::widget() ?>
 
-        <th>Created</th>
+        <th><?= \Yii::t('app', 'Created') ?></th>
     </tr>
     </thead>
     <tbody>

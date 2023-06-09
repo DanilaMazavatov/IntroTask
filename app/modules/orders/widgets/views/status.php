@@ -3,7 +3,7 @@
 /** @var yii\web\View $this */
 /** @var yii\web\View $statuses */
 
-Yii::$app->language = (Yii::$app->language == 'ru') ? '' : Yii::$app->language;
+$language = (Yii::$app->language == 'ru') ? '' : Yii::$app->language;
 
 use yii\helpers\Url;
 
@@ -19,10 +19,10 @@ foreach ($statuses as $key => $status) {
     }
 
     if ($key == 'All orders') {
-        $data .= "<a href=\"" . Url::to(['/orders?page=1', 'language' => Yii::$app->language])
+        $data .= "<a href=\"" . Url::to(['/orders?page=1', 'language' => $language])
             . "\">All orders</a>";
     } else {
-        $data .= "<a href=\"" . Url::to(["/orders?page=1&status=$status", 'language' => Yii::$app->language]). "\">$key</a>";
+        $data .= "<a href=\"" . Url::to(["/orders?page=1&status=$status", 'language' => $language]). "\">$key</a>";
     }
 
     $data .= "</li>";

@@ -16,14 +16,15 @@ $curr_service = Yii::$app->request->get('service');
     <div class="dropdown">
         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Service
+            <?= \Yii::t('app', 'Services') ?>
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
             <?php
 
-            $data = "<li class=\"active\"><a href=\"" . Url::to(["/orders?page=1$mode", 'language' => Yii::$app->language]) . "\">All ($count_services)</a></li>";
+            $data = "<li class=\"active\"><a href=\"" . Url::to(["/orders?page=1$mode", 'language' => Yii::$app->language]) . "\">" .
+                \Yii::t('app', 'All') . " ($count_services)</a></li>";
             foreach ($raw_data as $datum) {
                 if ($datum->id == $curr_service) {
                     $data .= '<li class="active">';

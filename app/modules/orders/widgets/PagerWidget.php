@@ -4,6 +4,7 @@
 namespace app\modules\orders\widgets;
 
 use app\modules\orders\models\OrderModel;
+use app\modules\orders\models\SearchOrder;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
@@ -14,18 +15,14 @@ class PagerWidget extends Widget
 {
     /**
      * @throws InvalidArgumentException
-     * @throws Exception
      */
     public function run()
     {
-        $orders = new OrderModel();
-
-        $orders->default_fields = 'count(o.id) as count';
-        $total_count = $orders->getDataOnPage(Yii::$app->request->get('page'), Yii::$app->request->get('service'),
-            Yii::$app->request->get('mode'), Yii::$app->request->get('status'));
+        $searchModel = new SearchOrder();
+        $data = $searchModel->search(\Yii::$app->request->queryParams)->count();
 
         $pages = new Pagination([
-            'totalCount' => $total_count[0]['count'],
+            'totalCount' => $data,
             'route' => '/orders',
             'pageSize' => 100,
         ]);

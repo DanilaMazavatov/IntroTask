@@ -27,18 +27,19 @@ $this->title = 'IntroTask';
     <tbody>
     <?php
     $data = '';
+
     foreach ($raw_data as $datum) {
         $data .= ' <tr>';
-        $data.= '        <td>' . $datum['ID'] . '</td>';
-        $data.= '        <td>' . $datum['User'] . '</td>';
-        $data.= '        <td class="link">' . $datum['Link'] . '</td>';
-        $data.= '        <td>' . $datum['Quantity'] . '</td>';
+        $data.= '        <td>' . $datum['id'] . '</td>';
+        $data.= '        <td>' . $datum['first_name'] . " " . $datum['last_name'] . '</td>';
+        $data.= '        <td class="link">' . $datum['link'] . '</td>';
+        $data.= '        <td>' . $datum['quantity'] . '</td>';
         $data.= '        <td class="service">';
-        $data.= '            <span class="label-id">' . $datum['service_id'] . '</span> ' . $datum['Service'];
+        $data.= '            <span class="label-id">' . $datum['service_id'] . '</span> ' . $datum['service_name'];
         $data.= '        </td>';
-        $data.= '        <td>' . $datum['Status'] . '</td>';
-        $data.= '        <td>' . $datum['Mode'] . '</td>';
-        $data.= '        <td><span class="nowrap">' . date("y-m-d", $datum['Created']) . '</span><span class="nowrap">' . date("h:i:s", $datum['Created']) . '</span></td>';
+        $data.= '        <td>' . $datum['status'] . '</td>';
+        $data.= '        <td>' . $datum['mode'] . '</td>';
+        $data.= '        <td><span class="nowrap">' . date("y-m-d", $datum['created_at']) . '</span><span class="nowrap">' . date("h:i:s", $datum['created_at']) . '</span></td>';
         $data .= ' </tr>';
     }
 

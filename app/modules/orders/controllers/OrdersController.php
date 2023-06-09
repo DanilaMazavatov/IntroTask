@@ -2,7 +2,7 @@
 
 namespace app\modules\orders\controllers;
 
-use app\modules\orders\models\OrderModel;
+use app\modules\orders\models\SearchOrder;
 use yii\base\BaseObject;
 use yii\web\Controller;
 
@@ -19,13 +19,11 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OrderModel();
-//        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
-        $data = $searchModel->getDataOnPage(\Yii::$app->request->get('page'), \Yii::$app->request->get('service'), \Yii::$app->request->get('mode'),
-            \Yii::$app->request->get('status'));
+        $searchModel = new SearchOrder();
+        $data = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'raw_data' => $data
+            'raw_data' => $data->all()
         ]);
     }
 }

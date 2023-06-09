@@ -7,7 +7,6 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
-
 class ServiceFilterWidget extends Widget
 {
     /**
@@ -18,7 +17,7 @@ class ServiceFilterWidget extends Widget
         $services = new ServiceModel();
 
         $raw_data = $services->find()->all();
-        $count_services = $services->find()->count();
+        $count_services = count($raw_data);
 
         return $this->render('services', [
             'raw_data' => $raw_data,

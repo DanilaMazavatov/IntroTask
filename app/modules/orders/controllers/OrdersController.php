@@ -12,7 +12,6 @@ use yii\web\Controller;
  */
 class OrdersController extends Controller
 {
-    private BaseObject $orders;
 
     /**
      * Данный метод отвечает за отображение данных в сыром виде

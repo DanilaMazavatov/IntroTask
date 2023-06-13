@@ -6,7 +6,7 @@
 use app\modules\orders\widgets\ModeFilterWidget;
 use app\modules\orders\widgets\ServiceFilterWidget;
 
-$this->title = \Yii::t('app', 'IntroTask');
+$this->title = \Yii::t('app', 'user.list.title');
 
 ?>
 
@@ -14,17 +14,17 @@ $this->title = \Yii::t('app', 'IntroTask');
     <thead>
     <tr>
         <th>ID</th>
-        <th><?= \Yii::t('app', 'User') ?></th>
-        <th><?= \Yii::t('app', 'Link') ?></th>
-        <th><?= \Yii::t('app', 'Quantity') ?></th>
+        <th><?= \Yii::t('app', 'user.list.columns.user') ?></th>
+        <th><?= \Yii::t('app', 'user.list.columns.link') ?></th>
+        <th><?= \Yii::t('app', 'user.list.columns.quantity') ?></th>
 
         <?= ServiceFilterWidget::widget() ?>
 
-        <th><?= \Yii::t('app', 'Status') ?></th>
+        <th><?= \Yii::t('app', 'user.list.columns.status') ?></th>
 
         <?= ModeFilterWidget::widget() ?>
 
-        <th><?= \Yii::t('app', 'Created') ?></th>
+        <th><?= \Yii::t('app', 'user.list.columns.created') ?></th>
     </tr>
     </thead>
     <tbody>

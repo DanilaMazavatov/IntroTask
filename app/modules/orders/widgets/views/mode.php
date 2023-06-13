@@ -6,9 +6,9 @@
 
 use yii\helpers\Url;
 
-$service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
+$lang = (Yii::$app->language == 'ru') ? '' : ('/' . Yii::$app->language);
 
-$language = (Yii::$app->language == 'ru') ? '' : Yii::$app->language;
+$service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
 
 ?>
 <th class="dropdown-th">
@@ -29,11 +29,11 @@ $language = (Yii::$app->language == 'ru') ? '' : Yii::$app->language;
                     $data .= "<li>";
                 }
                 if ($key == 'all') {
-                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service", 'language' => $language]) . "\">" . \Yii::t('app', 'All') . "</a>";
+                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service") . "\">" . \Yii::t('app', 'user.list.mode.all') . "</a>";
                 } elseif ($key == 'manual') {
-                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service&mode=$mode", 'language' => $language]) . "\">" . \Yii::t('app', 'Manual') . "</a>";
+                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service&mode=$mode") . "\">" . \Yii::t('app', 'user.list.mode.manual') . "</a>";
                 } elseif ($key == 'auto') {
-                    $data .= "<a href=\"" . Url::to(["/orders?page=1$service&mode=$mode", 'language' => $language]) . "\">" . \Yii::t('app', 'Auto') . "</a>";
+                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service&mode=$mode") . "\">" . \Yii::t('app', 'user.list.mode.auto') . "</a>";
                 }
                 $data .= "</li>";
             }

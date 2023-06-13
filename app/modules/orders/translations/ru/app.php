@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'user.list.header' => 'Заказы',
+    'user.list.title' => 'Вступительное задание',
+    'user.list.service.all' => 'Все',
+    'user.list.mode.all' => 'Все',
+    'user.list.mode.manual' => 'Вручную',
+    'user.list.mode.auto' => 'Автоматически',
+    'user.list.status.all_orders' => 'Все заказы',
+    'user.list.status.pending' => 'В ожидании',
+    'user.list.status.in_progress' => 'В процессе',
+    'user.list.status.completed' => 'Выполнено',
+    'user.list.status.canceled' => 'Отменено',
+    'user.list.status.error' => 'Ошибка',
+    'user.list.columns.user' => 'Пользователь',
+    'user.list.columns.link' => 'Ссылка',
+    'user.list.columns.quantity' => 'Количество',
+    'user.list.columns.status' => 'Статус',
+    'user.list.columns.created' => 'Создано',
+    'user.list.search.order_id' => 'ID заказа',
+    'user.list.search.placeholder' => 'Поиск заказов',
+    'user.list.search.link' => 'Ссылка',
+    'user.list.search.username' => 'ФИО пользователя',
+    'user.list.services.services' => 'Сервисы',
+    'user.list.services.all' => 'Все',
+];

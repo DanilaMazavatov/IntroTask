@@ -7,6 +7,9 @@
 use app\modules\orders\widgets\PagerWidget;
 use app\modules\orders\widgets\SearchWidget;
 use app\modules\orders\widgets\StatusFilterWidget;
+use yii\helpers\Url;
+
+$language_change = Yii::$app->language == 'en' ? "ru" : "en";
 
 ?>
 
@@ -50,9 +53,9 @@ use app\modules\orders\widgets\StatusFilterWidget;
         </div>
         <div class="collapse navbar-collapse" id="bs-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Orders</a></li>
+                <li class="active"><a href="#"><?= \Yii::t('app', 'user.list.header') ?></a></li>
             </ul>
-        </div>
+            <a class="btn btn-default mt-2 mr-2" style="float: right;margin: 1ex;" href="<?= "/$language_change/orders" ?>"><?= $language_change ?></a>
     </div>
 </nav>
 <div class="container-fluid">
@@ -64,10 +67,8 @@ use app\modules\orders\widgets\StatusFilterWidget;
     </ul>
     <?= $content ?>
     <div class="row">
+
         <?= PagerWidget::widget() ?>
-        <div class="col-sm-4 pagination-counters">
-            1 to 100 of 3263
-        </div>
 
     </div>
 </div>

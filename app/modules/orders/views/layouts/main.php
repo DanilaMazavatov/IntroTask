@@ -4,6 +4,7 @@
 /** @var yii\web\View $content */
 /** @var yii\web\View $pages */
 
+use app\modules\orders\widgets\ExportWidget;
 use app\modules\orders\widgets\PagerWidget;
 use app\modules\orders\widgets\SearchWidget;
 use app\modules\orders\widgets\StatusFilterWidget;
@@ -62,6 +63,7 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
     <ul class="nav nav-tabs p-b">
         <?= StatusFilterWidget::widget() ?>
         <li class="pull-right custom-search">
+            <?= ExportWidget::widget() ?>
             <?= SearchWidget::widget() ?>
         </li>
     </ul>

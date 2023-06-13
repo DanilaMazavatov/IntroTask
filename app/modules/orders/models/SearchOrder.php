@@ -54,7 +54,7 @@ class SearchOrder extends OrderModel
      * @return ActiveQuery|null
      * @throws InvalidArgumentException
      */
-    public function search(array $params): ActiveQuery|null
+    public function search(array $params, $without_limit = null): ActiveQuery|null
     {
         $this->mode = $params['mode'] ?? null;
         $this->service = $params['service'] ?? null;
@@ -86,13 +86,16 @@ class SearchOrder extends OrderModel
             ->from('orders o')
             ->leftJoin('services s', 'o.service_id = s.id')
             ->leftJoin('users u', 'o.user_id = u.id')
-            ->offset(($this->page - 1) * 100)
-            ->limit(self::LIMIT)
-            ->asArray();
+            ->offset(($this->page - 1) * 100);
 
-        if (!$this->validate()) {
-            return $query;
-        }
+        if(!$without_limit)
+            $query->limit(self::LIMIT);
+
+        $query->asArray();
+
+//        if (!$this->validate()) {
+//            return $query;
+//        }
 
         $query->andFilterWhere([
             $operator, $search_value, $this->search
@@ -103,6 +106,7 @@ class SearchOrder extends OrderModel
             'o.service_id' => $this->service,
             'o.status' => $this->status,
         ]);
+
         return $query;
     }
 }

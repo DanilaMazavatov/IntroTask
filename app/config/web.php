@@ -64,7 +64,8 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'orders/orders/index',
-                '/orders'=> 'orders/orders/index',
+                '/orders' => 'orders/orders/index',
+                '/export' => 'orders/export/index',
             ],
         ],
     ],

@@ -23,4 +23,5 @@ return [
     'user.list.search.username' => 'Username',
     'user.list.services.services' => 'Services',
     'user.list.services.all' => 'All',
+    'user.list.export.button' => 'Export to CSV',
 ];

@@ -24,4 +24,5 @@ return [
     'user.list.search.username' => 'ФИО пользователя',
     'user.list.services.services' => 'Сервисы',
     'user.list.services.all' => 'Все',
+    'user.list.export.button' => 'Выгрузить в CSV',
 ];

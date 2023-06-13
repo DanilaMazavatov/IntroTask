@@ -13,6 +13,8 @@ class ExportWidget extends Widget
      */
     public function run()
     {
-       dd(\Yii::$app->request->queryParams);
+        return $this->render('export_form', [
+            'filters' => \Yii::$app->request->queryParams,
+        ]);
     }
 }

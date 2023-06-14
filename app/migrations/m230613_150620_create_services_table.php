@@ -13,8 +13,8 @@ class m230613_150620_create_services_table extends Migration
     public function safeUp()
     {
         $this->createTable('{{%services}}', [
-            'id' => $this->primaryKey(),
-            'name' => $this->string(300),
+            'id' => $this->primaryKey()->notNull(),
+            'name' => $this->string(300)->notNull(),
         ]);
     }
 

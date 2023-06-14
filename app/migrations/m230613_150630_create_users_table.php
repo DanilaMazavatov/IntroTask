@@ -13,9 +13,9 @@ class m230613_150630_create_users_table extends Migration
     public function safeUp()
     {
         $this->createTable('{{%users}}', [
-            'id' => $this->primaryKey(),
-            'first_name' => $this->string(),
-            'last_name' => $this->string(),
+            'id' => $this->primaryKey()->notNull(),
+            'first_name' => $this->string(300)->notNull(),
+            'last_name' => $this->string(300)->notNull(),
         ]);
     }
 

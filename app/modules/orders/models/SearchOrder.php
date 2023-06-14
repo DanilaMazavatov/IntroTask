@@ -5,6 +5,7 @@ namespace app\modules\orders\models;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\db\ActiveQuery;
+use yii\db\mssql\PDO;
 
 /**
  * SearchOrder represents the model behind the search form of `app\modules\orders\models\OrderModel`.

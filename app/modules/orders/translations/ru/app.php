@@ -18,6 +18,7 @@ return [
     'user.list.columns.quantity' => 'Количество',
     'user.list.columns.status' => 'Статус',
     'user.list.columns.created' => 'Создано',
+    'user.list.columns.mode' => 'Режим',
     'user.list.search.order_id' => 'ID заказа',
     'user.list.search.placeholder' => 'Поиск заказов',
     'user.list.search.link' => 'Ссылка',

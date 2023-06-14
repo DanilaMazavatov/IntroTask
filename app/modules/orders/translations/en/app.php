@@ -24,4 +24,5 @@ return [
     'user.list.services.services' => 'Services',
     'user.list.services.all' => 'All',
     'user.list.export.button' => 'Export to CSV',
+    'user.list.columns.mode' => 'Mode',
 ];

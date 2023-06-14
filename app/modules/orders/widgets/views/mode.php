@@ -15,7 +15,7 @@ $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$
     <div class="dropdown">
         <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <?= \Yii::t('app', 'Mode') ?>
+            <?= Yii::t('app', 'user.list.columns.mode') ?>
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">

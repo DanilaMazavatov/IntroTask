@@ -28,9 +28,9 @@ services:
     # Линкуем внешнюю папку с исходниками внутрь
     volumes:
       - "../app:/var/www/app"
+      - "../docker:/var/www/docker"
+      - "../migrations:/var/www/migrations"
       - "./conf/nginx:/etc/nginx/sites-available"
-      - "./.env-example:/var/www/app/.env-example"
-      - "../migrations:/var/www/app/migrations"
   # Контейнер с базой данных
   db:
     image: mysql:${MYSQL_VERSION}

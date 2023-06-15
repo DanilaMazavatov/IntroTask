@@ -27,70 +27,54 @@ class ExportController extends Controller
         $params = \Yii::$app->request->queryParams;
         unset($params['page']);
 
-        $this->writeToCsv(';ID;' .
-            Yii::t('app', 'user.list.columns.user') . ';' .
-            Yii::t('app', 'user.list.columns.link') . ';' .
-            Yii::t('app', 'user.list.columns.quantity') . ';' .
-            Yii::t('app', 'user.list.services.services') . ';' .
-            Yii::t('app', 'user.list.columns.status') . ';' .
-            Yii::t('app', 'user.list.columns.mode') . ';' .
-            Yii::t('app', 'user.list.columns.created') . ';'
-            . "\r\n");
+        $stream = fopen('php://output', 'a');
 
-        \Yii::$app->db->masterPdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
+
+        header('Content-Disposition: attachment;filename="export_' . $date . '.csv"');
+
+        ob_start();
+        fputcsv(
+            $stream,
+            [
+                'ID',
+                Yii::t('app', 'user.list.columns.user'),
+                Yii::t('app', 'user.list.columns.link'),
+                Yii::t('app', 'user.list.columns.quantity'),
+                Yii::t('app', 'user.list.services.services'),
+                Yii::t('app', 'user.list.columns.status'),
+                Yii::t('app', 'user.list.columns.mode'),
+                Yii::t('app', 'user.list.columns.created'),
+                "\r\n"
+            ]);
+
+        ob_flush();
+        flush();
 
         $searchModel = new SearchOrder();
 
         foreach ($searchModel->search($params, true)->batch() as $search) {
             foreach ($search as $value) {
-                $tmp_data =
-                    ';' . $value['id'] .
-                    ';' . $value['last_name'] . ' ' . $value['first_name'] .
-                    ';' . $value['link'] .
-                    ';' . $value['quantity'] .
-                    ';' . $value['service_id'] . ' ' . $value['service_name'] .
-                    ';' . $value['status'] .
-                    ';' . $value['mode'] .
-                    ';' . $value['created_at'] .
-                    "\r\n";
-
-                $this->writeToCsv($tmp_data);
-            }
-        }
-
-        \Yii::$app->db->masterPdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
-
-        $response = Yii::$app->response;
-        $response->format = Response::FORMAT_RAW;
-
-        $handle = fopen($this->csv, 'rb');
-
-        header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="orders_' . $date . '.csv"');
-
-        while (!feof($handle)) {
-            echo fread($handle, 8192);
-
-            if (ob_get_level()) {
+                fputcsv(
+                    $stream,
+                    [
+                        $value['id'],
+                        $value['last_name'] . ' ' . $value['first_name'],
+                        $value['link'],
+                        $value['quantity'],
+                        $value['service_id'] . ' ' . $value['service_name'],
+                        $value['status'],
+                        $value['mode'],
+                        date("Y-m-d h:i:s", $value['created_at'])
+                    ]);
                 ob_flush();
                 flush();
             }
         }
 
-        fclose($handle);
-
-        unlink($this->csv);
-
-        Yii::$app->end();
-
+        ob_end_clean();
+        exit();
     }
 
-    private function writeToCsv($data)
-    {
-        $tmp = fopen($this->csv, 'a+');
-        fwrite($tmp, $data);
-        fclose($tmp);
-    }
 
     private function setCSV($path)
     {

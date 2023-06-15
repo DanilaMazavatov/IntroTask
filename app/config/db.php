@@ -2,8 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => env('DB_DRIVER') . ':host=' . env('MYSQL_HOST') . ';port=' . env('MYSQL_PORT') . ';dbname=' . env('MYSQL_DATABASE'),
-    'username' => env('MYSQL_USERNAME'),
-    'password' => env('MYSQL_PASSWORD'),
-    'charset' => env('MYSQL_CHARSET'),
+    'dsn' => env('DB_DRIVER', 'mysql') . ':host=' . env('MYSQL_HOST', 'db') .
+        ';port=' . env('MYSQL_PORT', 3306) . ';dbname=' . env('MYSQL_DATABASE', 'test_db'),
+    'username' => env('MYSQL_USERNAME', 'root'),
+    'password' => env('MYSQL_PASSWORD', 'root'),
+    'charset' => env('MYSQL_CHARSET', 'utf8'),
 ];

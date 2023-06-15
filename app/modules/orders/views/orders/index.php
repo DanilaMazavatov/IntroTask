@@ -43,7 +43,7 @@ $this->title = \Yii::t('app', 'user.list.title');
             <td><?= $datum['mode'] ?></td>
             <td>
             <span class="nowrap">
-                <?= date("y-m-d", $datum['created_at']) ?>
+                <?= date("Y-m-d", $datum['created_at']) ?>
             </span>
                 <span class="nowrap">
                 <?= date("h:i:s", $datum['created_at']) ?>

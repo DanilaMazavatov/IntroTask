@@ -4,7 +4,7 @@ FROM richarvey/nginx-php-fpm
 # Добавляем наше веб приложение
 ADD app /var/www/app
 
-ADD migrations /var/www/migrations
+#ADD migrations /var/www/migrations
 
 # Удаляем конфиги сайтов которые там есть
 RUN rm -Rf /etc/nginx/sites-enabled/*

@@ -18,7 +18,7 @@ services:
     container_name: ${APP_CONTAINER_NAME}
     # Показываем наружу 80 порт
     ports:
-      - "80:80"
+      - "${APP_EXT_PORT}:80"
     # Подключаем к общей сети с другими контейнерами
     networks:
       - default
@@ -28,8 +28,9 @@ services:
     # Линкуем внешнюю папку с исходниками внутрь
     volumes:
       - "../app:/var/www/app"
-      # Так же линкуем конфиг для nginx
       - "./conf/nginx:/etc/nginx/sites-available"
+      - "./.env-example:/var/www/app/.env-example"
+      - "../migrations:/var/www/app/migrations"
   # Контейнер с базой данных
   db:
     image: mysql:${MYSQL_VERSION}
@@ -39,7 +40,7 @@ services:
       - default
     # Показываем наружу порт
     ports:
-      - "${MYSQL_PORT}:3306"
+      - "${DB_EXT_PORT}:3306"
     # Задаем параметры для инициализации БД
     environment:
       # Пароль к БД

@@ -15,6 +15,7 @@ services:
       # Корнем указываем корень основного проекта
       context: ../
       dockerfile: ./docker/Dockerfile
+    container_name: ${APP_CONTAINER_NAME}
     # Показываем наружу 80 порт
     ports:
       - "80:80"
@@ -31,7 +32,8 @@ services:
       - "./conf/nginx:/etc/nginx/sites-available"
   # Контейнер с базой данных
   db:
-    image: mysql:latest
+    image: mysql:${MYSQL_VERSION}
+    container_name: ${DB_CONTAINER_NAME}
     # Подключаем к общей сети с другими контейнерами
     networks:
       - default

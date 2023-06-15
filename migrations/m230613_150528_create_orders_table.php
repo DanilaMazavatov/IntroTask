@@ -10,7 +10,7 @@ class m230613_150528_create_orders_table extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeUp()
+    public function safeUp(): void
     {
         $this->createTable('orders', [
             'id' => $this->primaryKey()->notNull(),

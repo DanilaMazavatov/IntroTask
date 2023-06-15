@@ -2,7 +2,6 @@
 
 namespace app\modules\orders\widgets;
 
-use app\modules\orders\models\SearchOrder;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 

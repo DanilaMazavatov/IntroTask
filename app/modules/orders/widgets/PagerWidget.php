@@ -7,7 +7,6 @@ use app\modules\orders\models\SearchOrder;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 use yii\data\Pagination;
-use function PHPUnit\Framework\returnSelf;
 
 class PagerWidget extends Widget
 {

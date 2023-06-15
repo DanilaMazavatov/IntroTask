@@ -65,7 +65,7 @@ class ExportController extends Controller
         $handle = fopen($this->csv, 'rb');
 
         header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="export_' . date('d.m.Y') . '.csv"');
+        header('Content-Disposition: attachment; filename="orders_' . date('d.m.Y') . '.csv"');
 
         while (!feof($handle)) {
             echo fread($handle, 8192);
@@ -75,7 +75,7 @@ class ExportController extends Controller
 
         fclose($handle);
 
-        unlink($this->csv);
+        exit(unlink($this->csv));
 
     }
 

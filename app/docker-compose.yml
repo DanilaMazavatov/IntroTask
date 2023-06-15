@@ -7,3 +7,21 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+
+  db:
+    image: mysql:8.0
+    # Подключаем к общей сети с другими контейнерами
+    networks:
+      - default
+    # Показываем наружу порт
+    ports:
+      - "3336:3306"
+    # Задаем параметры для инициализации БД
+    environment:
+      # Пароль к БД
+      MYSQL_ROOT_PASSWORD: root
+      # Создаваемая по умолчанию бд
+      MYSQL_DATABASE: test_db
+    # Линкуем внешнюю папку для хранения БД
+    volumes:
+      - "./database:/var/lib/mysql"

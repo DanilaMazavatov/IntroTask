@@ -47,7 +47,7 @@ $config = [
             'translations' => [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@app/modules/orders/translations',
+                    'basePath' => '@app/modules/orders/messages',
                     'fileMap' => [
                         'app' => 'app.php',
                     ],

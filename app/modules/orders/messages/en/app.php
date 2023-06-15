@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'user.list.header' => 'Orders',
+    'user.list.title' => 'Intro Task',
+    'user.list.mode.all' => 'All',
+    'user.list.mode.manual' => 'Manual',
+    'user.list.mode.auto' => 'Auto',
+    'user.list.status.all_orders' => 'All Orders',
+    'user.list.status.pending' => 'Pending',
+    'user.list.status.in_progress' => 'In progress',
+    'user.list.status.completed' => 'Completed',
+    'user.list.status.canceled' => 'Canceled',
+    'user.list.status.error' => 'Error',
+    'user.list.columns.user' => 'User',
+    'user.list.columns.link' => 'Link',
+    'user.list.columns.quantity' => 'Quantity',
+    'user.list.columns.status' => 'Status',
+    'user.list.columns.created' => 'Created',
+    'user.list.search.order_id' => 'Order ID',
+    'user.list.search.placeholder' => 'Search Orders',
+    'user.list.search.link' => 'Link',
+    'user.list.search.username' => 'Username',
+    'user.list.services.services' => 'Services',
+    'user.list.services.all' => 'All',
+    'user.list.export.button' => 'Export to CSV',
+    'user.list.columns.mode' => 'Mode',
+];

@@ -20,8 +20,9 @@ class ExportController extends Controller
      */
     public function actionIndex()
     {
+        $date = date('d.m.Y');
 
-        $this->setCSV(__DIR__ . '/../tmp/' . 'export_' . date('d.m.Y') . '.csv');
+        $this->setCSV(__DIR__ . '/../tmp/' . 'export_' . $date . '.csv');
 
         $params = \Yii::$app->request->queryParams;
         unset($params['page']);
@@ -65,17 +66,22 @@ class ExportController extends Controller
         $handle = fopen($this->csv, 'rb');
 
         header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="orders_' . date('d.m.Y') . '.csv"');
+        header('Content-Disposition: attachment; filename="orders_' . $date . '.csv"');
 
         while (!feof($handle)) {
             echo fread($handle, 8192);
-            ob_flush();
-            flush();
+
+            if (ob_get_level()) {
+                ob_flush();
+                flush();
+            }
         }
 
         fclose($handle);
 
-        exit(unlink($this->csv));
+        unlink($this->csv);
+
+        Yii::$app->end();
 
     }
 

@@ -14,7 +14,7 @@ class m230615_111436_restore_data extends Migration
      */
     public function safeUp()
     {
-        ini_set('memory_limit', '100M');
+        ini_set('memory_limit', '1000M');
 
         $sql = file_get_contents(__DIR__ . '/data/test_db_data.sql');
 

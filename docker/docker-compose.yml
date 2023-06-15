@@ -44,7 +44,7 @@ services:
     # Задаем параметры для инициализации БД
     environment:
       # Пароль к БД
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       # Создаваемая по умолчанию бд
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     # Линкуем внешнюю папку для хранения БД

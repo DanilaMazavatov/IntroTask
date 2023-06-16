@@ -8,9 +8,6 @@ use yii\base\Model;
 
 class ExportOrders extends Model
 {
-    private string $csv;
-
-
     /**
      * {@inheritdoc}
      */

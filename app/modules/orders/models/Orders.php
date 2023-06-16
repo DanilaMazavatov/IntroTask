@@ -3,6 +3,7 @@
 namespace app\modules\orders\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "orders".
@@ -19,8 +20,18 @@ use Yii;
  * @property Services $service
  * @property Users $user
  */
-class Orders extends \yii\db\ActiveRecord
+class Orders extends ActiveRecord
 {
+    const MODE_ALL = null;
+    const MODE_MANUAL = 0;
+    const MODE_AUTO = 1;
+    const STATUS_ALL = null;
+    const STATUS_PENDING = 0;
+    const STATUS_IN_PROGRESS = 1;
+    const STATUS_COMPLETED = 2;
+    const STATUS_CANCELED = 3;
+    const STATUS_ERROR = 4;
+
     /**
      * {@inheritdoc}
      */
@@ -78,5 +89,26 @@ class Orders extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(Users::class, ['id' => 'user_id']);
+    }
+
+    public static function getModes(): array
+    {
+        return [
+            self::MODE_ALL => 'all',
+            self::MODE_MANUAL => 'manual',
+            self::MODE_AUTO => 'auto',
+        ];
+    }
+
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_ALL => 'all',
+            self::STATUS_PENDING => 'pending',
+            self::STATUS_IN_PROGRESS => 'in_progress',
+            self::STATUS_COMPLETED => 'completed',
+            self::STATUS_CANCELED => 'canceled',
+            self::STATUS_ERROR => 'error',
+        ];
     }
 }

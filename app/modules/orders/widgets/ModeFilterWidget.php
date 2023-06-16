@@ -2,6 +2,7 @@
 
 namespace app\modules\orders\widgets;
 
+use app\modules\orders\models\Orders;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
@@ -15,11 +16,7 @@ class ModeFilterWidget extends Widget
     public function run()
     {
         return $this->render('mode', [
-            'modes' => [
-                'all' => null,
-                'manual' => self::MANUAL,
-                'auto' => self::AUTO
-            ]
+            'modes' => array_flip(Orders::getModes())
         ]);
     }
 }

@@ -6,7 +6,7 @@
 
 use yii\helpers\Url;
 
-$lang = (Yii::$app->language == 'ru') ? '' : ('/' . Yii::$app->language);
+$lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->language);
 $mode = (Yii::$app->request->get('mode') !== null) ? ('&mode=' . Yii::$app->request->get('mode')) : '';
 $curr_service = Yii::$app->request->get('service');
 
@@ -19,27 +19,25 @@ $curr_service = Yii::$app->request->get('service');
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="active">
+                <a href="<?= Url::to("$lang/orders?page=1$mode") ?>">
+                    <?= \Yii::t('app', 'user.list.services.all') ?><?=  " ($count_services)" ?>
+                </a>
+            </li>
 
-            <?php
-
-            $data = "<li class=\"active\"><a href=\"" . Url::to("$lang/orders?page=1$mode") . "\">" .
-                \Yii::t('app', 'user.list.services.all') . " ($count_services)</a></li>";
-            foreach ($raw_data as $datum) {
-                if ($datum->id == $curr_service) {
-                    $data .= '<li class="active">';
-                } else {
-                    $data .= '<li>';
-                }
-
-                $data .= "<a href=\"" . Url::to("$lang/orders?page=1&service=$datum->id" . "$mode") . "\">
-                <span class=\"label-id\">$datum->id</span>$datum->name</a>";
-
-                $data .= '</li>';
-            }
-
-            echo $data;
-            unset($data);
-            ?>
+            <?php foreach ($raw_data as $datum): ?>
+                <?php if ($datum->id == $curr_service): ?>
+                    <li class="active">
+                <?php else: ?>
+                    <li>
+                <?php endif; ?>
+                <a href="<?= Url::to("$lang/orders?page=1&service=$datum->id" . "$mode") ?>">
+                <span class="label-id">
+                    <?= $datum->id ?>
+                </span><?= $datum->name ?>
+                </a>
+                </li>
+            <?php endforeach; ?>
 
         </ul>
     </div>

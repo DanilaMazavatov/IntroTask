@@ -6,7 +6,7 @@
 
 use yii\helpers\Url;
 
-$lang = (Yii::$app->language == 'ru') ? '' : ('/' . Yii::$app->language);
+$lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->language);
 
 $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
 
@@ -19,29 +19,21 @@ $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <?php
-
-            $data = '';
-            foreach ($modes as $key => $mode) {
-                if ($mode === Yii::$app->request->get('mode')) {
-                    $data .= "<li class=\"active\">";
-                } else {
-                    $data .= "<li>";
-                }
-                if ($key == 'all') {
-                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service") . "\">" . \Yii::t('app', 'user.list.mode.all') . "</a>";
-                } elseif ($key == 'manual') {
-                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service&mode=$mode") . "\">" . \Yii::t('app', 'user.list.mode.manual') . "</a>";
-                } elseif ($key == 'auto') {
-                    $data .= "<a href=\"" . Url::to("$lang/orders?page=1$service&mode=$mode") . "\">" . \Yii::t('app', 'user.list.mode.auto') . "</a>";
-                }
-                $data .= "</li>";
-            }
-
-            echo $data;
-            unset($data);
-
-            ?>
+            <?php foreach ($modes as $key => $mode): ?>
+                <?php if ($mode === Yii::$app->request->get('mode')): ?>
+                    <li class=\"active\">
+                <?php else: ?>
+                    <li>
+                <?php endif; ?>
+                <?php if ($key == 'all'): ?>
+                    <a href="<?= Url::to("$lang/orders?page=1$service") ?>"><?= \Yii::t('app', 'user.list.mode.all')?></a>
+                <?php elseif ($key == 'manual'): ?>
+                    <a href="<?= Url::to("$lang/orders?page=1$service&mode=$mode") ?>"><?= \Yii::t('app', 'user.list.mode.manual')?></a>
+                <?php elseif ($key == 'auto'): ?>
+                    <a href="<?= Url::to("$lang/orders?page=1$service&mode=$mode") ?>"><?= \Yii::t('app', 'user.list.mode.auto')?></a>
+                <?php endif; ?>
+                    </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 </th>

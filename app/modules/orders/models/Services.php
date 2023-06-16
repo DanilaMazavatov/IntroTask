@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  */
-class ServiceModel extends ActiveRecord
+class Services extends ActiveRecord
 {
     /**
      * {@inheritdoc}

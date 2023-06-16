@@ -2,7 +2,7 @@
 
 namespace app\modules\orders\widgets;
 
-use app\modules\orders\models\ServiceModel;
+use app\modules\orders\models\Services;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
@@ -14,7 +14,7 @@ class ServiceFilterWidget extends Widget
      */
     public function run()
     {
-        $services = new ServiceModel();
+        $services = new Services();
 
         $raw_data = $services->find()->all();
         $count_services = count($raw_data);

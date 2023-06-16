@@ -3,7 +3,8 @@
 
 namespace app\modules\orders\widgets;
 
-use app\modules\orders\models\SearchOrder;
+use app\modules\orders\models\search\SearchOrder;
+use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 use yii\data\Pagination;
@@ -19,7 +20,8 @@ class PagerWidget extends Widget
     public function run()
     {
         $searchModel = new SearchOrder();
-        $data = $searchModel->search(\Yii::$app->request->queryParams)->count();
+        $searchModel->load(Yii::$app->request->get(), '');
+        $data = $searchModel->count();
 
         $pages = new Pagination([
             'totalCount' => $data,

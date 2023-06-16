@@ -4,11 +4,6 @@
 /** @var yii\web\View $content */
 /** @var yii\web\View $pages */
 
-use app\modules\orders\widgets\ExportWidget;
-use app\modules\orders\widgets\PagerWidget;
-use app\modules\orders\widgets\SearchWidget;
-use app\modules\orders\widgets\StatusFilterWidget;
-
 $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 
 ?>
@@ -38,39 +33,21 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 </head>
 <body>
 <?php $this->beginBody(); ?>
-<nav class="navbar navbar-fixed-top navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><?= \Yii::t('app', 'user.list.header') ?></a></li>
-            </ul>
-            <div class="custom-search mr-2 mt-2" style="float: right;margin-top: 1ex;margin-right: 1ex">
-                <?= ExportWidget::widget() ?>
-            </div>
-            <a class="btn btn-default mt-2 mr-2" style="float: right;margin: 1ex;" href="<?= "/$language_change/orders" ?>"><?= $language_change ?></a>
-    </div>
-</nav>
+
+<?=
+    $this->render('navbar', [
+        'language_change' => $language_change
+    ]);
+?>
+
 <div class="container-fluid">
-    <ul class="nav nav-tabs p-b">
-        <?= StatusFilterWidget::widget() ?>
-        <li class="pull-right custom-search">
-            <?= SearchWidget::widget() ?>
-        </li>
-    </ul>
+
+    <?= $this->render('filtration'); ?>
+
     <?= $content ?>
-    <div class="row">
 
-        <?= PagerWidget::widget() ?>
+    <?= $this->render('pager'); ?>
 
-    </div>
 </div>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

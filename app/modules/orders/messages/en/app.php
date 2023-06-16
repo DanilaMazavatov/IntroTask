@@ -3,6 +3,7 @@
 return [
     'user.list.header' => 'Orders',
     'user.list.title' => 'Intro Task',
+    'user.list.service.all' => 'All',
     'user.list.mode.all' => 'All',
     'user.list.mode.manual' => 'Manual',
     'user.list.mode.auto' => 'Auto',

@@ -3,7 +3,7 @@
 
 namespace orders\widgets;
 
-use orders\models\search\SearchOrder;
+use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
@@ -19,7 +19,7 @@ class PagerWidget extends Widget
      */
     public function run()
     {
-        $searchModel = new SearchOrder();
+        $searchModel = new OrderSearch();
         $searchModel->load(Yii::$app->request->get(), '');
         $data = $searchModel->count();
 

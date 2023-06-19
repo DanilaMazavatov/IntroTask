@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
 /**
  * SearchOrder represents the model behind the search form of `orders\models\OrderModel`.
  */
-class SearchOrder extends Model
+class OrderSearch extends Model
 {
     const SCENARIO_FILTER = 'filter';
     const SCENARIO_SEARCH = 'search';
@@ -58,7 +58,7 @@ class SearchOrder extends Model
 
     public static function getRules(): array
     {
-        return (new SearchOrder)->rules();
+        return (new OrderSearch)->rules();
     }
 
     /**

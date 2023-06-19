@@ -2,13 +2,13 @@
 
 namespace orders\models\forms;
 
-use orders\models\search\SearchOrder;
+use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
-class ExportOrders extends Model
+class ExportOrdersForm extends Model
 {
     public $search;
 
@@ -27,7 +27,7 @@ class ExportOrders extends Model
      */
     public function rules(): array
     {
-        return SearchOrder::getRules();
+        return OrderSearch::getRules();
     }
 
     /**
@@ -67,7 +67,7 @@ class ExportOrders extends Model
         ob_flush();
         flush();
 
-        $searchModel = new SearchOrder();
+        $searchModel = new OrderSearch();
         $searchModel->load($this->getAttributes(), '');
 
         foreach ($searchModel->searchToExport()->batch() as $search) {

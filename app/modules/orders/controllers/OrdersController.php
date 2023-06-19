@@ -2,7 +2,7 @@
 
 namespace orders\controllers;
 
-use orders\models\search\SearchOrder;
+use orders\models\search\OrderSearch;
 use yii\web\Controller;
 use Yii;
 
@@ -17,8 +17,11 @@ class OrdersController extends Controller
      */
     public function actionIndex(): string
     {
-        $searchModel = new SearchOrder();
-        $searchModel->setScenario($this->expectScenario());
+        $searchModel = new OrderSearch();
+
+        if ($scenario = $this->expectScenario())
+            $searchModel->setScenario($scenario);
+
         $searchModel->load(Yii::$app->request->get(), '');
         $data = $searchModel->search();
 
@@ -33,11 +36,11 @@ class OrdersController extends Controller
         $attributes = Yii::$app->request->get();
 
         if (array_key_exists('mode', $attributes) || array_key_exists('service', $attributes)) {
-            return SearchOrder::SCENARIO_FILTER;
+            return OrderSearch::SCENARIO_FILTER;
         } elseif (array_key_exists('status', $attributes)) {
-            return SearchOrder::SCENARIO_STATUS;
+            return OrderSearch::SCENARIO_STATUS;
         } elseif (array_key_exists('search', $attributes) && array_key_exists('search_type', $attributes)) {
-            return SearchOrder::SCENARIO_SEARCH;
+            return OrderSearch::SCENARIO_SEARCH;
         } else {
             return null;
         }

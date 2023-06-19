@@ -2,7 +2,7 @@
 
 namespace orders\widgets;
 
-use orders\models\search\SearchOrder;
+use orders\models\search\OrderSearch;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
@@ -13,7 +13,7 @@ class SearchWidget extends Widget
      */
     public function run()
     {
-        $model = new SearchOrder(\Yii::$app->request->queryParams);
+        $model = new OrderSearch(\Yii::$app->request->queryParams);
         return $this->render('search_form', [
             'model' => $model
         ]);

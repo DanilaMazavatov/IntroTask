@@ -6,6 +6,9 @@ use orders\models\Orders;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
+/**
+ * Widget generates a list with statuses
+ */
 class StatusFilterWidget extends Widget
 {
     /**

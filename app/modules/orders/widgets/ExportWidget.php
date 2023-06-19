@@ -5,6 +5,9 @@ namespace orders\widgets;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
+/**
+ * Widget generates a button to submit the form for export to a csv file
+ */
 class ExportWidget extends Widget
 {
     /**

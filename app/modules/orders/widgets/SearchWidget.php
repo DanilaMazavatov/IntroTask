@@ -6,6 +6,9 @@ use orders\models\search\OrderSearch;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
+/**
+ * Widget generates form for search data
+ */
 class SearchWidget extends Widget
 {
     /**

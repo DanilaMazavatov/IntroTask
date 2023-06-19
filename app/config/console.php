@@ -33,11 +33,11 @@ $config = [
 //        'fixture' => [ // Fixture generation command line.
 //            'class' => 'yii\faker\FixtureController',
 //        ],
-//        'migrate' => [
-//            'class' => 'yii\console\controllers\MigrateController',
-//            'migrationTable' => 'mg_migration',
-//            'templateFile' => '@app/migrations/templates/mg.php'
-//        ],
+        'migrate-orders' => [
+            'migrationPath' => '/var/www/migrations',
+            'class' => 'app\components\console\MigrationController',
+//            'templateFile' => '@app/migrations/templates/mg.php',
+        ],
     ],
 
 ];

@@ -3,12 +3,16 @@
 
 namespace orders\widgets;
 
+use orders\controllers\OrdersController;
 use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 use yii\data\Pagination;
 
+/**
+ * Pagination widget
+ */
 class PagerWidget extends Widget
 {
     const ROUTE = '/orders';
@@ -20,7 +24,12 @@ class PagerWidget extends Widget
     public function run()
     {
         $searchModel = new OrderSearch();
+
+        if ($scenario = OrdersController::expectScenario())
+            $searchModel->setScenario($scenario);
+
         $searchModel->load(Yii::$app->request->get(), '');
+
         $data = $searchModel->count();
 
         $pages = new Pagination([

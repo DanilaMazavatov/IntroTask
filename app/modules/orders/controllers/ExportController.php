@@ -8,6 +8,9 @@ use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
 use yii\web\Controller;
 
+/**
+ * Default controller for the export to CSV
+ */
 class ExportController extends Controller
 {
     /**

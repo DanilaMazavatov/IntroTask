@@ -19,10 +19,11 @@ class OrdersController extends Controller
     {
         $searchModel = new OrderSearch();
 
-        if ($scenario = $this->expectScenario())
+        if ($scenario = self::expectScenario())
             $searchModel->setScenario($scenario);
 
         $searchModel->load(Yii::$app->request->get(), '');
+
         $data = $searchModel->search();
 
         return $this->render('index', [
@@ -31,7 +32,10 @@ class OrdersController extends Controller
         ]);
     }
 
-    public function expectScenario()
+    /**
+     * @return string|null
+     */
+    public static function expectScenario(): ?string
     {
         $attributes = Yii::$app->request->get();
 

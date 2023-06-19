@@ -21,6 +21,13 @@ class OrderSearch extends Model
     const SCENARIO_SEARCH = 'search';
     const SCENARIO_STATUS = 'status';
 
+    const LIMIT = 100;
+    const SEARCH_TYPE_ID = 1;
+    const SEARCH_TYPE_LINK = 2;
+    const SEARCH_TYPE_USER = 3;
+    const FIELDS = 'o.id, u.first_name, u.last_name,
+             o.link, o.quantity, o.service_id, s.name as service_name, o.status, o.mode, o.created_at';
+
     public $search;
 
     public $mode;
@@ -33,13 +40,6 @@ class OrderSearch extends Model
 
     public $search_type;
 
-    const LIMIT = 100;
-    const SEARCH_TYPE_ID = 1;
-    const SEARCH_TYPE_LINK = 2;
-    const SEARCH_TYPE_USER = 3;
-    const FIELDS = 'o.id, u.first_name, u.last_name,
-             o.link, o.quantity, o.service_id, s.name as service_name, o.status, o.mode, o.created_at';
-
     /**
      * {@inheritdoc}
      */
@@ -48,11 +48,20 @@ class OrderSearch extends Model
         return [
             ['mode', 'in', 'range' => [Orders::MODE_MANUAL, Orders::MODE_AUTO], 'on' => self::SCENARIO_FILTER],
             ['service', 'number', 'on' => self::SCENARIO_FILTER],
-            ['status', 'in', 'range' => [Orders::STATUS_PENDING, Orders::STATUS_IN_PROGRESS, Orders::STATUS_COMPLETED, Orders::STATUS_CANCELED, Orders::STATUS_ERROR],
+            ['status', 'in', 'range' => array_keys(Orders::getStatuses()),
                 'on' => self::SCENARIO_STATUS],
-            ['search_type', 'in', 'range' => [self::SEARCH_TYPE_ID, self::SEARCH_TYPE_LINK, self::SEARCH_TYPE_USER], 'on' => self::SCENARIO_SEARCH],
+            ['search_type', 'in', 'range' => self::getSearchTypes(), 'on' => self::SCENARIO_SEARCH],
             ['search', 'string', 'on' => self::SCENARIO_SEARCH],
             ['page', 'number', 'numberPattern' => '/[^0]/'],
+        ];
+    }
+
+    public static function getSearchTypes(): array
+    {
+        return [
+            self::SEARCH_TYPE_ID,
+            self::SEARCH_TYPE_LINK,
+            self::SEARCH_TYPE_USER,
         ];
     }
 
@@ -73,11 +82,19 @@ class OrderSearch extends Model
         return $scenarios;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function count()
     {
+        if (!$this->validate()) {
+           return false;
+        }
+
         $query = $this->buildQuery();
 
         $query = $this->applyFilters($query);
+
 
         return $query->count();
     }
@@ -89,15 +106,12 @@ class OrderSearch extends Model
     public function search()
     {
         if (!$this->validate()) {
-            foreach ($this->errors as $error) {
-                \Yii::$app->end($error[0]);
-            }
+            return false;
         }
 
         $query = $this->buildQuery();
 
-        $query
-            ->limit(self::LIMIT)
+        $query->limit(self::LIMIT)
             ->offset(($this->page - 1) * 100);
 
         $query = $this->selectQuery($query);

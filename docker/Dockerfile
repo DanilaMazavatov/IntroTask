@@ -4,6 +4,8 @@ FROM richarvey/nginx-php-fpm
 # Добавляем наше веб приложение
 ADD app /var/www/app
 
+WORKDIR /var/www/app
+
 # Удаляем конфиги сайтов которые там есть
 RUN rm -Rf /etc/nginx/sites-enabled/*
 

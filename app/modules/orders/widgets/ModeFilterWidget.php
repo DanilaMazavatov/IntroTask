@@ -6,10 +6,11 @@ use orders\models\Orders;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
+/**
+ * Widget generates a dropdown list with modes
+ */
 class ModeFilterWidget extends Widget
 {
-    const MANUAL = 0;
-    const AUTO = 1;
     /**
      * @throws InvalidArgumentException
      */

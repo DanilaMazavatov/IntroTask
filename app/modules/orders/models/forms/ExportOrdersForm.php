@@ -8,6 +8,9 @@ use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
+/**
+ * Form for export data to CSV file
+ */
 class ExportOrdersForm extends Model
 {
     public $search;
@@ -36,12 +39,6 @@ class ExportOrdersForm extends Model
      */
     public function export()
     {
-
-        if (!$this->validate()) {
-            foreach ($this->errors as $error) {
-                \Yii::$app->end($error[0]);
-            }
-        }
 
         $date = date('d.m.Y');
 

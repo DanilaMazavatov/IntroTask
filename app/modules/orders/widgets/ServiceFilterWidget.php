@@ -7,6 +7,9 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
+/**
+ * Widget generates a dropdown list with services
+ */
 class ServiceFilterWidget extends Widget
 {
     /**

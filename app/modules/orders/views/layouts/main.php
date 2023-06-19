@@ -4,18 +4,21 @@
 /** @var yii\web\View $content */
 /** @var yii\web\View $pages */
 
-use app\assets\OrdersAsset;
+use app\assets\AppAsset;
 
 $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 
 ?>
-<?php OrdersAsset::register($this); ?>
+
+<?php //AppAsset::register($this); ?>
 
 <?php $this->beginPage(); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/site.css">
     <?php $this->head(); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

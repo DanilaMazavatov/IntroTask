@@ -2,7 +2,7 @@
 
 /** @var yii\web\View $language_change */
 
-use app\modules\orders\widgets\ExportWidget;
+use orders\widgets\ExportWidget;
 
 ?>
 <nav class="navbar navbar-fixed-top navbar-default">

@@ -26,4 +26,6 @@ return [
     'user.list.services.all' => 'All',
     'user.list.export.button' => 'Export to CSV',
     'user.list.columns.mode' => 'Mode',
+    'user.list.search.empty' => 'No records were found matching your search!',
+    'user.list.orders.error' => 'Filters entered in error!',
 ];

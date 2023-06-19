@@ -26,4 +26,6 @@ return [
     'user.list.services.services' => 'Сервисы',
     'user.list.services.all' => 'Все',
     'user.list.export.button' => 'Выгрузить в CSV',
+    'user.list.search.empty' => 'По вашему запросу не найдено ни одной записи!',
+    'user.list.orders.error' => 'Фильтрация выполнена с ошибкой!',
 ];

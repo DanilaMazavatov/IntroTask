@@ -1,7 +1,7 @@
 <?php
 
-use app\modules\orders\widgets\SearchWidget;
-use app\modules\orders\widgets\StatusFilterWidget;
+use orders\widgets\SearchWidget;
+use orders\widgets\StatusFilterWidget;
 
 ?>
 <ul class="nav nav-tabs p-b">

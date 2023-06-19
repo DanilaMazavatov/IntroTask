@@ -10,7 +10,7 @@ $lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->la
 ?>
 
 <?php foreach ($statuses as $key => $status): ?>
-    <?php if ($status === Yii::$app->request->get('status')): ?>
+    <?php if ((string)$status === (string)Yii::$app->request->get('status')): ?>
         <li class="active">
     <?php else: ?>
         <li>

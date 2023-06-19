@@ -1,28 +1,47 @@
 <?php
 
-namespace app\modules\orders\models\forms;
+namespace orders\models\forms;
 
-use app\modules\orders\models\search\SearchOrder;
+use orders\models\search\SearchOrder;
 use Yii;
+use yii\base\ExitException;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
 class ExportOrders extends Model
 {
+    public $search;
+
+    public $mode;
+
+    public $service;
+
+    public $status;
+
+    public $page;
+
+    public $search_type;
+
     /**
      * {@inheritdoc}
      */
     public function rules(): array
     {
-        return [
-            [['mode', 'service', 'status'], 'number'],
-        ];
+        return SearchOrder::getRules();
     }
 
+    /**
+     * @throws ExitException
+     * @throws InvalidArgumentException
+     */
     public function export()
     {
-//        if (!$this->validate()) {
-//            dd(123);
-//        }
+
+        if (!$this->validate()) {
+            foreach ($this->errors as $error) {
+                \Yii::$app->end($error[0]);
+            }
+        }
 
         $date = date('d.m.Y');
 

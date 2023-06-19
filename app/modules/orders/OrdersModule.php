@@ -1,14 +1,16 @@
 <?php
 
-namespace app\modules\orders;
+namespace orders;
+
+use yii\base\Module;
 
 /**
  * orders module definition class
  */
-class OrdersModule extends \yii\base\Module
+class OrdersModule extends Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\orders\controllers';
+    public $controllerNamespace = 'orders\controllers';
 }

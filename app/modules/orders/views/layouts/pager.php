@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\orders\widgets\PagerWidget;
+use orders\widgets\PagerWidget;
 
 ?>
 <div class="row">

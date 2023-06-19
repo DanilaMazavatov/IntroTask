@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\orders\widgets;
+namespace orders\widgets;
 
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;

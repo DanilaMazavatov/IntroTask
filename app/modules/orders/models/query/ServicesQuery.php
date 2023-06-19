@@ -1,19 +1,16 @@
 <?php
 
-namespace app\modules\orders\models;
+namespace orders\models;
+
+use yii\db\ActiveQuery;
 
 /**
  * This is the ActiveQuery class for [[Services]].
  *
  * @see Services
  */
-class ServicesQuery extends \yii\db\ActiveQuery
+class ServicesQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * {@inheritdoc}
      * @return Services[]|array

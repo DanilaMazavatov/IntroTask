@@ -4,8 +4,8 @@
 
 /** @var yii\web\View $raw_data */
 
-use app\modules\orders\widgets\ModeFilterWidget;
-use app\modules\orders\widgets\ServiceFilterWidget;
+use orders\widgets\ModeFilterWidget;
+use orders\widgets\ServiceFilterWidget;
 
 $this->title = \Yii::t('app', 'user.list.title');
 

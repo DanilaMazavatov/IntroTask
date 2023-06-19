@@ -1,19 +1,25 @@
 <?php
 
-namespace app\modules\orders\models\search;
+namespace orders\models\search;
 
-use app\modules\orders\models\Orders;
-use app\modules\orders\models\Services;
-use app\modules\orders\models\Users;
+use orders\models\Orders;
+use orders\models\Services;
+use orders\models\Users;
+use Yii;
+use yii\base\ExitException;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
+use yii\db\ActiveQuery;
+use yii\web\NotFoundHttpException;
 
 /**
- * SearchOrder represents the model behind the search form of `app\modules\orders\models\OrderModel`.
+ * SearchOrder represents the model behind the search form of `orders\models\OrderModel`.
  */
 class SearchOrder extends Model
 {
-    const SCENARIO_FILTER = 'mode';
+    const SCENARIO_FILTER = 'filter';
     const SCENARIO_SEARCH = 'search';
+    const SCENARIO_STATUS = 'status';
 
     public $search;
 
@@ -26,12 +32,13 @@ class SearchOrder extends Model
     public $page;
 
     public $search_type;
-    public $max_page;
 
     const LIMIT = 100;
+    const SEARCH_TYPE_ID = 1;
+    const SEARCH_TYPE_LINK = 2;
+    const SEARCH_TYPE_USER = 3;
     const FIELDS = 'o.id, u.first_name, u.last_name,
              o.link, o.quantity, o.service_id, s.name as service_name, o.status, o.mode, o.created_at';
-
 
     /**
      * {@inheritdoc}
@@ -39,10 +46,19 @@ class SearchOrder extends Model
     public function rules(): array
     {
         return [
-            [['mode', 'service', 'status'], 'number'],
-            [['search', 'search_type'], 'required'],
-            [['page'], 'number', 'numberPattern' => '/[^0]/'],
+            ['mode', 'in', 'range' => [Orders::MODE_MANUAL, Orders::MODE_AUTO], 'on' => self::SCENARIO_FILTER],
+            ['service', 'number', 'on' => self::SCENARIO_FILTER],
+            ['status', 'in', 'range' => [Orders::STATUS_PENDING, Orders::STATUS_IN_PROGRESS, Orders::STATUS_COMPLETED, Orders::STATUS_CANCELED, Orders::STATUS_ERROR],
+                'on' => self::SCENARIO_STATUS],
+            ['search_type', 'in', 'range' => [self::SEARCH_TYPE_ID, self::SEARCH_TYPE_LINK, self::SEARCH_TYPE_USER], 'on' => self::SCENARIO_SEARCH],
+            ['search', 'string', 'on' => self::SCENARIO_SEARCH],
+            ['page', 'number', 'numberPattern' => '/[^0]/'],
         ];
+    }
+
+    public static function getRules(): array
+    {
+        return (new SearchOrder)->rules();
     }
 
     /**
@@ -52,6 +68,8 @@ class SearchOrder extends Model
     {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_FILTER] = ['mode', 'service', 'page'];
+        $scenarios[self::SCENARIO_SEARCH] = ['search', 'search_type', 'page'];
+        $scenarios[self::SCENARIO_STATUS] = ['status', 'page'];
         return $scenarios;
     }
 
@@ -64,11 +82,17 @@ class SearchOrder extends Model
         return $query->count();
     }
 
+    /**
+     * @throws NotFoundHttpException
+     * @throws InvalidArgumentException|ExitException
+     */
     public function search()
     {
-//        if (!$this->validate()) {
-//            dd(123);
-//        }
+        if (!$this->validate()) {
+            foreach ($this->errors as $error) {
+                \Yii::$app->end($error[0]);
+            }
+        }
 
         $query = $this->buildQuery();
 
@@ -82,14 +106,14 @@ class SearchOrder extends Model
 
         $query->asArray();
 
+        if (empty($query->all())) {
+            Yii::$app->end(Yii::t('app', 'user.list.search.empty'));
+        }
+
         return $query->all();
     }
     public function searchToExport()
     {
-//        if (!$this->validate()) {
-//            dd(123);
-//        }
-
         $query = $this->buildQuery();
 
         $query = $this->selectQuery($query);
@@ -101,7 +125,7 @@ class SearchOrder extends Model
         return $query;
     }
 
-    private function buildQuery ()
+    private function buildQuery (): ActiveQuery
     {
         return Orders::find()
             ->from(Orders::tableName() . ' o')
@@ -136,7 +160,6 @@ class SearchOrder extends Model
                 break;
         }
 
-
         $query->andFilterWhere([
             'o.mode' => $this->mode,
             'o.service_id' => $this->service,
@@ -144,11 +167,6 @@ class SearchOrder extends Model
         ]);
 
         return $query;
-    }
-
-    private function getMaxPage($query)
-    {
-        $this->max_page = intval(ceil($query->count() / self::LIMIT));
     }
 
 }

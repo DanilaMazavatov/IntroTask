@@ -14,6 +14,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@orders' => '@app/modules/orders'
     ],
     'components' => [
         'request' => [
@@ -71,7 +72,7 @@ $config = [
     'params' => $params,
     'modules' => [
         'orders' => [
-            'class' => 'app\modules\orders\OrdersModule',
+            'class' => 'orders\OrdersModule',
             'layout' => 'main',
         ],
     ],

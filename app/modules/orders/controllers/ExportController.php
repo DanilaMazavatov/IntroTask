@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\orders\controllers;
+namespace orders\controllers;
 
-use app\modules\orders\models\forms\ExportOrders;
+use orders\models\forms\ExportOrdersForm;
 use Yii;
 use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
@@ -16,7 +16,7 @@ class ExportController extends Controller
      */
     public function actionIndex(): void
     {
-        $export = new ExportOrders();
+        $export = new ExportOrdersForm();
         $export->load(Yii::$app->request->get(), '');
         $export->export();
     }

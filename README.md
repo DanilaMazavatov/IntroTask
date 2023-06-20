@@ -1,9 +1,12 @@
-# IntroTask
+# Вводное задание (Orders)
 
 ## Инструкция по развертыванию приложения:
 
-<code>cp docker/.env-example docker/.env</code>
-<br>
-<code>docker-compose -f docker/docker-compose.yml up -d --build</code>
-<br>
-<code>docker exec -i yii-app bash -c "cd /var/www/app && composer install && php yii migrate --migrationPath=/var/www/migrations"</code>
+1. ### Настроить окружение в файле *docker/.env-example*
+
+2. ### Выполнить следющий команды из каталога проекта:
+```console
+cp docker/.env-example docker/.env
+docker-compose -f docker/docker-compose.yml up -d --build
+docker exec -i yii-app bash -c "cd /var/www/app && composer install && php yii migrate"
+```

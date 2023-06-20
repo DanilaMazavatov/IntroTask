@@ -15,7 +15,7 @@ class OrdersController extends Controller
      * Данный метод отвечает за отображение данных в сыром виде
      * @throws
      */
-    public function actionIndex(): string
+    public function actionIndex()
     {
         $searchModel = new OrderSearch();
 
@@ -24,7 +24,10 @@ class OrdersController extends Controller
 
         $searchModel->load(Yii::$app->request->get(), '');
 
-        $data = $searchModel->search();
+        if (!($data = $searchModel->search())) {
+            Yii::$app->session->setFlash('error', implode($searchModel->firstErrors));
+            return $this->goBack();
+        }
 
         return $this->render('index', [
             'raw_data' => $data,
@@ -39,14 +42,9 @@ class OrdersController extends Controller
     {
         $attributes = Yii::$app->request->get();
 
-        if (array_key_exists('mode', $attributes) || array_key_exists('service', $attributes)) {
-            return OrderSearch::SCENARIO_FILTER;
-        } elseif (array_key_exists('status', $attributes)) {
-            return OrderSearch::SCENARIO_STATUS;
-        } elseif (array_key_exists('search', $attributes) && array_key_exists('search_type', $attributes)) {
+        if (array_key_exists('search', $attributes) || array_key_exists('search_type', $attributes)) {
             return OrderSearch::SCENARIO_SEARCH;
-        } else {
-            return null;
         }
+        return null;
     }
 }

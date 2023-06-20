@@ -4,6 +4,7 @@
 
 /** @var yii\web\View $raw_data */
 
+use orders\models\Orders;
 use orders\widgets\ModeFilterWidget;
 use orders\widgets\ServiceFilterWidget;
 
@@ -39,8 +40,8 @@ $this->title = \Yii::t('app', 'user.list.title');
             <td class="service">
                 <span class="label-id"><?= $datum['service_id'] ?></span><?= $datum['service_name'] ?>
             </td>
-            <td><?= $datum['status'] ?></td>
-            <td><?= $datum['mode'] ?></td>
+            <td><?= Orders::findStatus($datum['status'])  ?></td>
+            <td><?= Orders::findMode($datum['mode']) ?></td>
             <td>
             <span class="nowrap">
                 <?= date("Y-m-d", $datum['created_at']) ?>

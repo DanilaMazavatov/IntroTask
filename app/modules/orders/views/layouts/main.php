@@ -10,16 +10,12 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 
 ?>
 
-<?php //AppAsset::register($this); ?>
+<?php AppAsset::register($this); ?>
 
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/site.css">
-    <?php $this->head(); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +29,7 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
             display: inline-block;
         }
     </style>
-
+    <?php $this->head(); ?>
 </head>
 <body>
 <?php $this->beginBody(); ?>
@@ -45,6 +41,11 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 ?>
 
 <div class="container-fluid">
+    <?php if( Yii::$app->session->hasFlash('error') ): ?>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <?php echo Yii::$app->session->getFlash('error'); ?>
+        </div>
+    <?php endif;?>
 
     <?= $this->render('filtration'); ?>
 
@@ -54,11 +55,7 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 
 </div>
 
-<?php $this->registerJsFile('/js/jquery.min.js'); ?>
-<?php $this->registerJsFile('/js/bootstrap.min.js'); ?>
-
 <?php $this->endBody(); ?>
 </body>
 <html>
-
 <?php $this->endPage(); ?>

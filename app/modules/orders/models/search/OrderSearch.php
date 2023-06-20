@@ -17,16 +17,12 @@ use yii\web\NotFoundHttpException;
  */
 class OrderSearch extends Model
 {
-    const SCENARIO_FILTER = 'filter';
     const SCENARIO_SEARCH = 'search';
-    const SCENARIO_STATUS = 'status';
 
     const LIMIT = 100;
     const SEARCH_TYPE_ID = 1;
     const SEARCH_TYPE_LINK = 2;
     const SEARCH_TYPE_USER = 3;
-    const FIELDS = 'o.id, u.first_name, u.last_name,
-             o.link, o.quantity, o.service_id, s.name as service_name, o.status, o.mode, o.created_at';
 
     public $search;
 
@@ -46,12 +42,11 @@ class OrderSearch extends Model
     public function rules(): array
     {
         return [
-            ['mode', 'in', 'range' => [Orders::MODE_MANUAL, Orders::MODE_AUTO], 'on' => self::SCENARIO_FILTER],
-            ['service', 'number', 'on' => self::SCENARIO_FILTER],
-            ['status', 'in', 'range' => array_keys(Orders::getStatuses()),
-                'on' => self::SCENARIO_STATUS],
+            ['mode', 'in', 'range' => [Orders::MODE_MANUAL, Orders::MODE_AUTO]],
+            ['service', 'number'],
+            ['status', 'in', 'range' => array_keys(Orders::getStatuses()),],
             ['search_type', 'in', 'range' => self::getSearchTypes(), 'on' => self::SCENARIO_SEARCH],
-            ['search', 'string', 'on' => self::SCENARIO_SEARCH],
+            ['search', 'required', 'on' => self::SCENARIO_SEARCH],
             ['page', 'number', 'numberPattern' => '/[^0]/'],
         ];
     }
@@ -65,20 +60,13 @@ class OrderSearch extends Model
         ];
     }
 
-    public static function getRules(): array
-    {
-        return (new OrderSearch)->rules();
-    }
-
     /**
      * {@inheritdoc}
      */
     public function scenarios(): array
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_FILTER] = ['mode', 'service', 'page'];
-        $scenarios[self::SCENARIO_SEARCH] = ['search', 'search_type', 'page'];
-        $scenarios[self::SCENARIO_STATUS] = ['status', 'page'];
+        $scenarios[self::SCENARIO_SEARCH] = ['search', 'search_type', 'mode', 'status', 'services', 'page'];
         return $scenarios;
     }
 
@@ -88,12 +76,13 @@ class OrderSearch extends Model
     public function count()
     {
         if (!$this->validate()) {
-           return false;
+            return false;
         }
 
         $query = $this->buildQuery();
 
-        $query = $this->applyFilters($query);
+        $query = $this->applySearchFilters($query);
+        $query = $this->applyCheckFilters($query);
 
 
         return $query->count();
@@ -116,28 +105,71 @@ class OrderSearch extends Model
 
         $query = $this->selectQuery($query);
 
-        $query = $this->applyFilters($query);
+        $query = $this->applySearchFilters($query);
+        $query = $this->applyCheckFilters($query);
 
         $query->asArray();
 
         if (empty($query->all())) {
-            Yii::$app->end(Yii::t('app', 'user.list.search.empty'));
+            $this->addError('error', Yii::t('app', 'user.list.search.empty'));
+            return false;
         }
 
         return $query->all();
     }
     public function searchToExport()
     {
+        if (!$this->validate()) {
+            return false;
+        }
+
         $query = $this->buildQuery();
 
         $query = $this->selectQuery($query);
 
-        $query = $this->applyFilters($query);
+        $query = $this->applySearchFilters($query);
+        $query = $this->applyCheckFilters($query);
 
         $query->asArray();
 
         return $query;
     }
+
+    public function searchServices()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $query = $this->buildQuery();
+
+        $query = $this->selectServiceQuery($query);
+
+        $query = $this->applySearchFilters($query);
+
+
+        $query->asArray();
+
+        return $query->all();
+    }
+
+    public function searchMode()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+
+        $query = $this->buildQuery();
+
+        $query = $this->selectModeQuery($query);
+
+        $query = $this->applySearchFilters($query);
+
+        $query->asArray();
+
+        return $query->column();
+    }
+
 
     private function buildQuery (): ActiveQuery
     {
@@ -149,10 +181,46 @@ class OrderSearch extends Model
 
     private function selectQuery($query)
     {
-        return $query->select(self::FIELDS);
+        return $query->select([
+            'o.id',
+            'u.first_name',
+            'u.last_name',
+            'o.link',
+            'o.quantity',
+            'o.service_id',
+            's.name as service_name',
+            'o.status',
+            'o.mode',
+            'o.created_at'
+        ])->distinct();
     }
 
-    private function applyFilters ($query)
+    private function selectServiceQuery($query)
+    {
+        return $query->select([
+            's.id as id',
+            's.name as name'
+        ]);
+    }
+    private function selectModeQuery($query)
+    {
+        return $query->select([
+            'o.mode'
+        ])->distinct();
+    }
+
+    private function applyCheckFilters($query)
+    {
+        $query->andFilterWhere([
+            'o.mode' => $this->mode,
+            'o.service_id' => $this->service,
+            'o.status' => $this->status,
+        ]);
+
+        return $query;
+    }
+
+    private function applySearchFilters ($query)
     {
         switch ($this->search_type) {
             case null:
@@ -174,13 +242,7 @@ class OrderSearch extends Model
                 break;
         }
 
-        $query->andFilterWhere([
-            'o.mode' => $this->mode,
-            'o.service_id' => $this->service,
-            'o.status' => $this->status,
-        ]);
-
-        return $query;
+       return $query;
     }
 
 }

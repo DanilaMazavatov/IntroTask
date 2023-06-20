@@ -12,6 +12,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
         '@tests' => '@app/tests',
+        '@migrate-orders' => '@app/../migrations'
     ],
     'components' => [
         'cache' => [
@@ -30,13 +31,9 @@ $config = [
     'params' => $params,
 
     'controllerMap' => [
-//        'fixture' => [ // Fixture generation command line.
-//            'class' => 'yii\faker\FixtureController',
-//        ],
         'migrate-orders' => [
-            'migrationPath' => '/var/www/migrations',
-            'class' => 'app\components\console\MigrationController',
-//            'templateFile' => '@app/migrations/templates/mg.php',
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationPath' => '@migrate-orders',
         ],
     ],
 

@@ -94,21 +94,38 @@ class Orders extends ActiveRecord
     public static function getModes(): array
     {
         return [
-            self::MODE_ALL => 'all',
-            self::MODE_MANUAL => 'manual',
-            self::MODE_AUTO => 'auto',
+            self::MODE_ALL => 'All',
+            self::MODE_MANUAL => 'Manual',
+            self::MODE_AUTO => 'Auto',
         ];
     }
 
     public static function getStatuses(): array
     {
         return [
-            self::STATUS_ALL => 'all',
-            self::STATUS_PENDING => 'pending',
-            self::STATUS_IN_PROGRESS => 'in_progress',
-            self::STATUS_COMPLETED => 'completed',
-            self::STATUS_CANCELED => 'canceled',
-            self::STATUS_ERROR => 'error',
+            self::STATUS_ALL => 'All',
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_COMPLETED => 'Completed',
+            self::STATUS_CANCELED => 'Canceled',
+            self::STATUS_ERROR => 'Error',
         ];
+    }
+
+    public static function findStatus($status): bool|string
+    {
+        foreach (self::getStatuses() as $key => $value) {
+            if ($status == $key)
+                return $value;
+        }
+        return false;
+    }
+    public static function findMode($mode): bool|string
+    {
+        foreach (self::getModes() as $key => $value) {
+            if ($mode == $key)
+                return $value;
+        }
+        return false;
     }
 }

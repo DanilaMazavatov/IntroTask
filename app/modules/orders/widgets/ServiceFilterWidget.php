@@ -2,7 +2,8 @@
 
 namespace orders\widgets;
 
-use orders\models\Services;
+use orders\controllers\OrdersController;
+use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
@@ -17,9 +18,14 @@ class ServiceFilterWidget extends Widget
      */
     public function run()
     {
-        $services = new Services();
+        $searchModel = new OrderSearch();
 
-        $raw_data = $services->find()->all();
+        if ($scenario = OrdersController::expectScenario())
+            $searchModel->setScenario($scenario);
+
+        $searchModel->load(Yii::$app->request->get(), '');
+
+        $raw_data = $searchModel->searchServices();
         $count_services = count($raw_data);
 
         return $this->render('services', [

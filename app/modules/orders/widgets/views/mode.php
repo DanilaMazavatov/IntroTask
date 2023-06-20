@@ -4,11 +4,10 @@
 
 /** @var yii\web\View $modes */
 
+use orders\models\Orders;
 use yii\helpers\Url;
 
-$lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->language);
-
-$service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$app->request->get('service')) : '';
+$params = Yii::$app->request->get();
 
 ?>
 <th class="dropdown-th">
@@ -19,18 +18,20 @@ $service = (Yii::$app->request->get('service') !== null) ? ('&service=' . Yii::$
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <?php foreach ($modes as $key => $mode): ?>
+            <?php foreach ($modes as $mode): ?>
                 <?php if ($mode === Yii::$app->request->get('mode')): ?>
                     <li class=\"active\">
                 <?php else: ?>
                     <li>
                 <?php endif; ?>
-                <?php if ($key == 'all'): ?>
-                    <a href="<?= Url::to("$lang/orders?page=1$service") ?>"><?= \Yii::t('app', 'user.list.mode.all')?></a>
-                <?php elseif ($key == 'manual'): ?>
-                    <a href="<?= Url::to("$lang/orders?page=1$service&mode=$mode") ?>"><?= \Yii::t('app', 'user.list.mode.manual')?></a>
-                <?php elseif ($key == 'auto'): ?>
-                    <a href="<?= Url::to("$lang/orders?page=1$service&mode=$mode") ?>"><?= \Yii::t('app', 'user.list.mode.auto')?></a>
+                <?php if (Orders::findMode($mode) == 'All'): ?>
+                    <a href="<?=
+                    Url::to(array_merge(["/orders"], $params, ['mode' => null]))
+                    ?>"><?= Yii::t('app', 'user.list.mode.all')?></a>
+                <?php elseif (Orders::findMode($mode) == 'Manual'): ?>
+                    <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => $mode])) ?>"><?= Yii::t('app', 'user.list.mode.manual')?></a>
+                <?php elseif (Orders::findMode($mode) == 'Auto'): ?>
+                    <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => $mode])) ?>"><?= Yii::t('app', 'user.list.mode.auto')?></a>
                 <?php endif; ?>
                     </li>
             <?php endforeach; ?>

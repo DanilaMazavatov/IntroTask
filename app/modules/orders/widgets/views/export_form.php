@@ -1,8 +1,5 @@
 <?php
 
-use yii\bootstrap5\ActiveForm;
-use yii\helpers\Html;
-
 /** @var yii\web\View $filters */
 
 ?>

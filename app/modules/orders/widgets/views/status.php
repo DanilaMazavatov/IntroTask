@@ -5,7 +5,7 @@
 
 use yii\helpers\Url;
 
-$lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->language);
+$params = Yii::$app->request->get();
 
 ?>
 
@@ -16,11 +16,11 @@ $lang = (Yii::$app->language == env('APP_LANGUAGE')) ? '' : ('/' . Yii::$app->la
         <li>
     <?php endif; ?>
     <?php if ($key == 'user.list.status.all_orders'): ?>
-            <a href="<?= Url::to("$lang/orders?page=1") ?>">
-                <?= \Yii::t('app', 'user.list.status.all_orders') ?>
+            <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => null, 'status' => null, 'service' => null])) ?>">
+                <?= Yii::t('app', 'user.list.status.all_orders') ?>
             </a>
     <?php else: ?>
-            <a href="<?= Url::to("$lang/orders?page=1&status=$status") ?>">
+            <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => null, 'service' => null, 'status' => $status])) ?>">
                 <?= Yii::t('app', $key) ?>
             </a>
     <?php endif; ?>

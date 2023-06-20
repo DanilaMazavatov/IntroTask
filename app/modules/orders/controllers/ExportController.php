@@ -20,7 +20,7 @@ class ExportController extends Controller
     public function actionIndex(): void
     {
         $export = new ExportOrdersForm();
-        $export->load(Yii::$app->request->get(), '');
+        $export->setAttributes(Yii::$app->request->get(), '');
         $export->export();
     }
 }

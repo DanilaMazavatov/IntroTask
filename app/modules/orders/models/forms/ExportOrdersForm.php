@@ -2,6 +2,7 @@
 
 namespace orders\models\forms;
 
+use orders\controllers\OrdersController;
 use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\ExitException;
@@ -26,14 +27,6 @@ class ExportOrdersForm extends Model
     public $search_type;
 
     /**
-     * {@inheritdoc}
-     */
-    public function rules(): array
-    {
-        return OrderSearch::getRules();
-    }
-
-    /**
      * @throws ExitException
      * @throws InvalidArgumentException
      */
@@ -43,8 +36,6 @@ class ExportOrdersForm extends Model
         $date = date('d.m.Y');
 
         $stream = fopen('php://output', 'a');
-
-        header('Content-Disposition: attachment;filename="export_' . $date . '.csv"');
 
         ob_start();
         fputcsv(
@@ -65,7 +56,13 @@ class ExportOrdersForm extends Model
         flush();
 
         $searchModel = new OrderSearch();
+
+        if ($scenario = OrdersController::expectScenario())
+            $searchModel->setScenario($scenario);
+
         $searchModel->load($this->getAttributes(), '');
+
+        header('Content-Disposition: attachment;filename="export_' . $date . '.csv"');
 
         foreach ($searchModel->searchToExport()->batch() as $search) {
             foreach ($search as $value) {

@@ -36,7 +36,7 @@ class Orders extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'orders';
     }
@@ -44,7 +44,7 @@ class Orders extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['user_id', 'link', 'quantity', 'service_id', 'status', 'created_at', 'mode'], 'required'],
@@ -58,7 +58,7 @@ class Orders extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -87,11 +87,14 @@ class Orders extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @return string[]
+     */
     public static function getModes(): array
     {
         return [
@@ -101,6 +104,9 @@ class Orders extends ActiveRecord
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public static function getStatuses(): array
     {
         return [
@@ -113,6 +119,10 @@ class Orders extends ActiveRecord
         ];
     }
 
+    /**
+     * @param $status
+     * @return bool|string
+     */
     public static function findStatus($status): bool|string
     {
         foreach (self::getStatuses() as $key => $value) {
@@ -121,6 +131,11 @@ class Orders extends ActiveRecord
         }
         return false;
     }
+
+    /**
+     * @param $mode
+     * @return bool|string
+     */
     public static function findMode($mode): bool|string
     {
         foreach (self::getModes() as $key => $value) {

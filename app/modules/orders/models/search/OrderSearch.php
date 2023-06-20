@@ -36,6 +36,12 @@ class OrderSearch extends Model
 
     public $search_type;
 
+    private bool $pagination = true;
+    private bool $checkFilter = true;
+    private bool $returnArray = true;
+    private bool $selectMode = false;
+    private bool $selectService = false;
+
     /**
      * {@inheritdoc}
      */
@@ -51,6 +57,9 @@ class OrderSearch extends Model
         ];
     }
 
+    /**
+     * @return int[]
+     */
     public static function getSearchTypes(): array
     {
         return [
@@ -70,9 +79,7 @@ class OrderSearch extends Model
         return $scenarios;
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+
     public function count()
     {
         if (!$this->validate()) {
@@ -82,8 +89,9 @@ class OrderSearch extends Model
         $query = $this->buildQuery();
 
         $query = $this->applySearchFilters($query);
-        $query = $this->applyCheckFilters($query);
 
+        if ($this->checkFilter)
+            $query = $this->applyCheckFilters($query);
 
         return $query->count();
     }
@@ -100,13 +108,23 @@ class OrderSearch extends Model
 
         $query = $this->buildQuery();
 
-        $query->limit(self::LIMIT)
-            ->offset(($this->page - 1) * 100);
+        if ($this->pagination) {
+            $query->limit(static::LIMIT)
+                ->offset(($this->page - 1) * static::LIMIT);
+        }
 
-        $query = $this->selectQuery($query);
+        if ($this->selectService) {
+            $query = $this->selectServiceQuery($query);
+        } elseif ($this->selectMode) {
+            $query = $this->selectModeQuery($query);
+        } else {
+            $query = $this->selectQuery($query);
+        }
 
         $query = $this->applySearchFilters($query);
-        $query = $this->applyCheckFilters($query);
+
+        if ($this->checkFilter)
+            $query = $this->applyCheckFilters($query);
 
         $query->asArray();
 
@@ -115,23 +133,13 @@ class OrderSearch extends Model
             return false;
         }
 
-        return $query->all();
-    }
-    public function searchToExport()
-    {
-        $query = $this->buildQuery();
-
-        $query = $this->selectQuery($query);
-
-        $query = $this->applySearchFilters($query);
-        $query = $this->applyCheckFilters($query);
-
-        $query->asArray();
-
-        return $query;
+        return $this->returnArray ? $query->all() : $query;
     }
 
-    public function searchServices()
+    /**
+     * @return mixed
+     */
+    public function searchServices(): mixed
     {
         $query = $this->buildQuery();
 
@@ -144,7 +152,10 @@ class OrderSearch extends Model
         return $query->all();
     }
 
-    public function searchMode()
+    /**
+     * @return mixed
+     */
+    public function searchMode(): mixed
     {
         $query = $this->buildQuery();
 
@@ -157,8 +168,10 @@ class OrderSearch extends Model
         return $query->column();
     }
 
-
-    private function buildQuery (): ActiveQuery
+    /**
+     * @return ActiveQuery
+     */
+    private function buildQuery(): ActiveQuery
     {
         return Orders::find()
             ->from(Orders::tableName() . ' o')
@@ -166,7 +179,11 @@ class OrderSearch extends Model
             ->leftJoin(Users::tableName() . ' u', 'o.user_id = u.id');
     }
 
-    private function selectQuery($query)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function selectQuery($query): mixed
     {
         return $query->select([
             'o.id',
@@ -182,21 +199,34 @@ class OrderSearch extends Model
         ])->distinct();
     }
 
-    private function selectServiceQuery($query)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function selectServiceQuery($query): mixed
     {
         return $query->select([
             's.id as id',
             's.name as name'
         ]);
     }
-    private function selectModeQuery($query)
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function selectModeQuery($query): mixed
     {
         return $query->select([
             'o.mode'
         ])->distinct();
     }
 
-    private function applyCheckFilters($query)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function applyCheckFilters($query): mixed
     {
         $query->andFilterWhere([
             'o.mode' => $this->mode,
@@ -207,7 +237,11 @@ class OrderSearch extends Model
         return $query;
     }
 
-    private function applySearchFilters ($query)
+    /**
+     * @param $query
+     * @return mixed
+     */
+    private function applySearchFilters($query): mixed
     {
         switch ($this->search_type) {
             case null:
@@ -229,7 +263,31 @@ class OrderSearch extends Model
                 break;
         }
 
-       return $query;
+        return $query;
+    }
+
+    /**
+     * @param bool $pagination
+     */
+    public function setPagination(bool $pagination): void
+    {
+        $this->pagination = $pagination;
+    }
+
+    /**
+     * @param bool $checkFilter
+     */
+    public function setCheckFilter(bool $checkFilter): void
+    {
+        $this->checkFilter = $checkFilter;
+    }
+
+    /**
+     * @param bool $returnArray
+     */
+    public function setReturnArray(bool $returnArray): void
+    {
+        $this->returnArray = $returnArray;
     }
 
 }

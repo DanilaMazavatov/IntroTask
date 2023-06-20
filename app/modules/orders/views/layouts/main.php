@@ -42,11 +42,6 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
 ?>
 
 <div class="container-fluid">
-    <?php if( Yii::$app->session->hasFlash('error') ): ?>
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <?php echo Yii::$app->session->getFlash('error'); ?>
-        </div>
-    <?php endif;?>
 
     <?= $this->render('filtration'); ?>
 

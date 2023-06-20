@@ -1,11 +1,6 @@
 <?php
 
-
 namespace orders\widgets;
-
-use orders\controllers\OrdersController;
-use orders\models\search\OrderSearch;
-use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 use yii\data\Pagination;
@@ -20,11 +15,16 @@ class PagerWidget extends Widget
     const PAGE_SIZE_PARAM = false;
 
     public $model;
+
     /**
      * @throws InvalidArgumentException
      */
     public function run()
     {
+        if (!$this->model) {
+            return;
+        }
+
         $data = $this->model->count();
 
         $pages = new Pagination([

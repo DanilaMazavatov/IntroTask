@@ -2,7 +2,6 @@
 
 namespace orders\models\forms;
 
-use orders\controllers\ExportController;
 use orders\controllers\OrdersController;
 use orders\models\Orders;
 use orders\models\search\OrderSearch;
@@ -10,6 +9,7 @@ use Yii;
 use yii\base\ExitException;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 /**
  * Form for export data to CSV file
@@ -26,11 +26,10 @@ class ExportOrdersForm extends Model
 
     public $page;
 
-    public $search_type;
-
     /**
      * @throws ExitException
      * @throws InvalidArgumentException
+     * @throws NotFoundHttpException
      */
     public function export()
     {
@@ -69,9 +68,13 @@ class ExportOrdersForm extends Model
             return false;
         }
 
+        $searchModel->setPagination(false);
+
+        $searchModel->setReturnArray(false);
+
         header('Content-Disposition: attachment;filename="export_' . $date . '.csv"');
 
-        foreach ($searchModel->searchToExport()->batch() as $search) {
+        foreach ($searchModel->search()->batch() as $search) {
             foreach ($search as $value) {
                 fputcsv(
                     $stream,
@@ -91,6 +94,7 @@ class ExportOrdersForm extends Model
         }
 
         ob_end_clean();
+
         exit();
     }
 }

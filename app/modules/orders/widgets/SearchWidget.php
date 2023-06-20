@@ -11,6 +11,7 @@ use yii\bootstrap5\Widget;
  */
 class SearchWidget extends Widget
 {
+
     /**
      * @throws InvalidArgumentException
      */

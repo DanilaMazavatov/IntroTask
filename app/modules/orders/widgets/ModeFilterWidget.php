@@ -2,10 +2,6 @@
 
 namespace orders\widgets;
 
-use orders\controllers\OrdersController;
-use orders\models\Orders;
-use orders\models\search\OrderSearch;
-use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
@@ -15,11 +11,16 @@ use yii\bootstrap5\Widget;
 class ModeFilterWidget extends Widget
 {
     public $model;
+
     /**
      * @throws InvalidArgumentException
      */
     public function run()
     {
+        if (!$this->model) {
+            return;
+        }
+
         $modes = $this->model->searchMode();
         array_unshift($modes, null);
 

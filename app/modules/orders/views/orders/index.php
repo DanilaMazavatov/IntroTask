@@ -4,6 +4,7 @@
 
 /** @var yii\web\View $raw_data */
 /** @var yii\web\View $model */
+/** @var yii\web\View $exception */
 
 use orders\models\Orders;
 use orders\widgets\ModeFilterWidget;
@@ -13,7 +14,11 @@ use orders\widgets\ServiceFilterWidget;
 $this->title = \Yii::t('app', 'user.list.title');
 
 ?>
-
+<?php if($exception): ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <?= $exception->getMessage() ?>
+    </div>
+<?php endif;?>
 <table class="table order-table">
     <thead>
     <tr>

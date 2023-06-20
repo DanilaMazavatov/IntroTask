@@ -28,7 +28,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'orders/orders/error',
         ],
         'mailer' => [
             'class' => Mailer::class,

@@ -2,6 +2,7 @@
 
 namespace orders\widgets;
 
+use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap5\Widget;
 
@@ -10,6 +11,7 @@ use yii\bootstrap5\Widget;
  */
 class ExportWidget extends Widget
 {
+
     /**
      * @throws InvalidArgumentException
      */

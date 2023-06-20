@@ -23,7 +23,8 @@ class ExportController extends Controller
         $export->setAttributes(Yii::$app->request->get(), '');
         if (!$export->export()) {
             Yii::$app->session->setFlash('error', implode($export->firstErrors));
-            return $this->goBack();
+            return (Yii::$app->request->referrer ?  $this->redirect(Yii::$app->request->referrer) : $this->goHome());
+
         }
     }
 }

@@ -26,7 +26,7 @@ class OrdersController extends Controller
 
         if (!($data = $searchModel->search())) {
             Yii::$app->session->setFlash('error', implode($searchModel->firstErrors));
-            return $this->goBack();
+            return (Yii::$app->request->referrer ?  $this->redirect(Yii::$app->request->referrer) : $this->goHome());
         }
 
         return $this->render('index', [

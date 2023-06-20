@@ -24,13 +24,13 @@ $params = Yii::$app->request->get();
                 <?php else: ?>
                     <li>
                 <?php endif; ?>
-                <?php if (Orders::findMode($mode) == 'All'): ?>
+                <?php if (Orders::findMode($mode) == 'user.list.mode.all'): ?>
                     <a href="<?=
                     Url::to(array_merge(["/orders"], $params, ['mode' => null]))
                     ?>"><?= Yii::t('app', 'user.list.mode.all')?></a>
-                <?php elseif (Orders::findMode($mode) == 'Manual'): ?>
+                <?php elseif (Orders::findMode($mode) == 'user.list.mode.manual'): ?>
                     <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => $mode])) ?>"><?= Yii::t('app', 'user.list.mode.manual')?></a>
-                <?php elseif (Orders::findMode($mode) == 'Auto'): ?>
+                <?php elseif (Orders::findMode($mode) == 'user.list.mode.auto'): ?>
                     <a href="<?= Url::to(array_merge(["/orders"], $params, ['mode' => $mode])) ?>"><?= Yii::t('app', 'user.list.mode.auto')?></a>
                 <?php endif; ?>
                     </li>

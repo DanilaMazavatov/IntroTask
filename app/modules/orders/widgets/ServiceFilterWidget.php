@@ -13,19 +13,15 @@ use yii\bootstrap5\Widget;
  */
 class ServiceFilterWidget extends Widget
 {
+    public $model;
+
     /**
      * @throws InvalidArgumentException
      */
     public function run()
     {
-        $searchModel = new OrderSearch();
+        $raw_data = $this->model->searchServices();
 
-        if ($scenario = OrdersController::expectScenario())
-            $searchModel->setScenario($scenario);
-
-        $searchModel->load(Yii::$app->request->get(), '');
-
-        $raw_data = $searchModel->searchServices();
         $count_services = count($raw_data);
 
         return $this->render('services', [

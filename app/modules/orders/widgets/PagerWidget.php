@@ -18,19 +18,14 @@ class PagerWidget extends Widget
     const ROUTE = '/orders';
     const PAGE_SIZE = 100;
     const PAGE_SIZE_PARAM = false;
+
+    public $model;
     /**
      * @throws InvalidArgumentException
      */
     public function run()
     {
-        $searchModel = new OrderSearch();
-
-        if ($scenario = OrdersController::expectScenario())
-            $searchModel->setScenario($scenario);
-
-        $searchModel->load(Yii::$app->request->get(), '');
-
-        $data = $searchModel->count();
+        $data = $this->model->count();
 
         $pages = new Pagination([
             'totalCount' => $data,

@@ -3,6 +3,7 @@
 namespace orders\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -74,9 +75,9 @@ class Orders extends ActiveRecord
     /**
      * Gets query for [[Service]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getService()
+    public function getService(): ActiveQuery
     {
         return $this->hasOne(Services::class, ['id' => 'service_id']);
     }
@@ -84,7 +85,7 @@ class Orders extends ActiveRecord
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -94,21 +95,21 @@ class Orders extends ActiveRecord
     public static function getModes(): array
     {
         return [
-            self::MODE_ALL => 'All',
-            self::MODE_MANUAL => 'Manual',
-            self::MODE_AUTO => 'Auto',
+            self::MODE_ALL => 'user.list.mode.all',
+            self::MODE_MANUAL => 'user.list.mode.manual',
+            self::MODE_AUTO => 'user.list.mode.auto',
         ];
     }
 
     public static function getStatuses(): array
     {
         return [
-            self::STATUS_ALL => 'All',
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_PROGRESS => 'In progress',
-            self::STATUS_COMPLETED => 'Completed',
-            self::STATUS_CANCELED => 'Canceled',
-            self::STATUS_ERROR => 'Error',
+            self::STATUS_ALL => 'user.list.status.all_orders',
+            self::STATUS_PENDING => 'user.list.status.pending',
+            self::STATUS_IN_PROGRESS => 'user.list.status.in_progress',
+            self::STATUS_COMPLETED => 'user.list.status.completed',
+            self::STATUS_CANCELED => 'user.list.status.canceled',
+            self::STATUS_ERROR => 'user.list.status.error',
         ];
     }
 

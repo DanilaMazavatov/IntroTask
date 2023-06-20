@@ -32,6 +32,7 @@ class OrdersController extends Controller
         return $this->render('index', [
             'raw_data' => $data,
             'count_pages' => count($data),
+            'model' => $searchModel,
         ]);
     }
 

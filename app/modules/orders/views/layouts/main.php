@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 /** @var yii\web\View $content */
 /** @var yii\web\View $pages */
+/** @var yii\web\View $model */
 
 use app\assets\AppAsset;
 
@@ -50,8 +51,6 @@ $language_change = Yii::$app->language == 'en' ? "ru" : "en";
     <?= $this->render('filtration'); ?>
 
     <?= $content ?>
-
-    <?= $this->render('pager'); ?>
 
 </div>
 

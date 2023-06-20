@@ -14,19 +14,13 @@ use yii\bootstrap5\Widget;
  */
 class ModeFilterWidget extends Widget
 {
+    public $model;
     /**
      * @throws InvalidArgumentException
      */
     public function run()
     {
-        $searchModel = new OrderSearch();
-
-        if ($scenario = OrdersController::expectScenario())
-            $searchModel->setScenario($scenario);
-
-        $searchModel->load(Yii::$app->request->get(), '');
-
-        $modes = $searchModel->searchMode();
+        $modes = $this->model->searchMode();
         array_unshift($modes, null);
 
         return $this->render('mode', [

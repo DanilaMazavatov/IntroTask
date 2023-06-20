@@ -119,10 +119,6 @@ class OrderSearch extends Model
     }
     public function searchToExport()
     {
-        if (!$this->validate()) {
-            return false;
-        }
-
         $query = $this->buildQuery();
 
         $query = $this->selectQuery($query);
@@ -137,16 +133,11 @@ class OrderSearch extends Model
 
     public function searchServices()
     {
-        if (!$this->validate()) {
-            return false;
-        }
-
         $query = $this->buildQuery();
 
         $query = $this->selectServiceQuery($query);
 
         $query = $this->applySearchFilters($query);
-
 
         $query->asArray();
 
@@ -155,10 +146,6 @@ class OrderSearch extends Model
 
     public function searchMode()
     {
-        if (!$this->validate()) {
-            return false;
-        }
-
         $query = $this->buildQuery();
 
         $query = $this->selectModeQuery($query);

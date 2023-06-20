@@ -17,10 +17,13 @@ class ExportController extends Controller
      * @throws ExitException
      * @throws InvalidArgumentException
      */
-    public function actionIndex(): void
+    public function actionIndex()
     {
         $export = new ExportOrdersForm();
         $export->setAttributes(Yii::$app->request->get(), '');
-        $export->export();
+        if (!$export->export()) {
+            Yii::$app->session->setFlash('error', implode($export->firstErrors));
+            return $this->goBack();
+        }
     }
 }

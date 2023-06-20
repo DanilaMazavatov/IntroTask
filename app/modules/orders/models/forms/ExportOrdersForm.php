@@ -2,7 +2,9 @@
 
 namespace orders\models\forms;
 
+use orders\controllers\ExportController;
 use orders\controllers\OrdersController;
+use orders\models\Orders;
 use orders\models\search\OrderSearch;
 use Yii;
 use yii\base\ExitException;
@@ -62,6 +64,11 @@ class ExportOrdersForm extends Model
 
         $searchModel->load($this->getAttributes(), '');
 
+        if(!$searchModel->validate()) {
+            $this->addError('error', implode($searchModel->getFirstErrors()));
+            return false;
+        }
+
         header('Content-Disposition: attachment;filename="export_' . $date . '.csv"');
 
         foreach ($searchModel->searchToExport()->batch() as $search) {
@@ -74,8 +81,8 @@ class ExportOrdersForm extends Model
                         $value['link'],
                         $value['quantity'],
                         $value['service_id'] . ' ' . $value['service_name'],
-                        $value['status'],
-                        $value['mode'],
+                        Yii::t('app', Orders::findStatus($value['status'])),
+                        Yii::t('app', Orders::findMode($value['mode'])),
                         date("Y-m-d h:i:s", $value['created_at'])
                     ]);
                 ob_flush();
